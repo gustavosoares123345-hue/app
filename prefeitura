@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rio Largo Digital - Super App e Painel de Gestão Municipal</title>
+    <meta name="description" content="Protótipo do Super App Rio Largo Digital e Painel de Gestão em Tempo Real do Prefeito. Transformando a gestão pública municipal.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ==========================================
+       TOP SYSTEM BAR (PERSISTENT WRAPPER)
+       ========================================== -->
+    <header class="system-header">
+        <div class="system-logo">
+            <!-- Municipal Crest SVG Mock -->
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50,10 L80,25 L80,55 C80,75 50,90 50,90 C50,90 20,75 20,55 L20,25 L50,10 Z" fill="#0B2545" stroke="#F4B942" stroke-width="4"/>
+                <path d="M50,20 L70,32 L70,52 C70,67 50,78 50,78 C50,78 30,67 30,52 L30,32 L50,20 Z" fill="#F4B942"/>
+                <circle cx="50" cy="45" r="12" fill="#10B981"/>
+                <path d="M42,45 L48,51 L58,39" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div>
+                <h1>Rio Largo <span>Digital</span><span class="system-tag">GOV.br</span></h1>
+            </div>
+        </div>
+        
+        <div class="system-tabs">
+            <button id="btn-tab-both" class="system-tab-btn active" onclick="switchView('both')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2 4h20v16H2V4zm2 2v12h16V6H4zm1 1h6v10H5V7zm8 0h6v4h-6V7zm0 6h6v4h-6v-4z"/></svg>
+                Visão Integrada (WOW!)
+            </button>
+            <button id="btn-tab-app" class="system-tab-btn" onclick="switchView('app')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 18H7V5h10v14z"/></svg>
+                Apenas Aplicativo
+            </button>
+            <button id="btn-tab-dash" class="system-tab-btn" onclick="switchView('dash')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 14H5v-4h6v4zm0-6H5V7h6v4zm8 6h-6v-4h6v4zm0-6h-6V7h6v4z"/></svg>
+                Painel do Prefeito
+            </button>
+        </div>
+    </header>
+
+    <!-- ==========================================
+       MAIN WORKSPACE (GRID CONTAINER)
+       ========================================== -->
+    <main id="main-workspace" class="workspace">
+        
+        <!-- COLUMN 1: SMARTPHONE SIMULATOR (CITIZEN APP) -->
+        <section id="column-app" class="phone-column">
+            <div class="phone-mockup">
+                
+                <!-- Home Indicator Bottom Bar -->
+                <div class="phone-home-indicator"></div>
+                
+                <!-- Notch -->
+                <div class="phone-notch"></div>
+                
+                <div class="phone-screen" id="phone-screen-container">
+                    
+                    <!-- Simulated Status Bar -->
+                    <div class="phone-status-bar">
+                        <span id="phone-clock">16:30</span>
+                        <div class="phone-status-icons">
+                            <!-- Signal Icon -->
+                            <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.07 19.58 10.49 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 15c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/></svg>
+                            <!-- Wifi Icon -->
+                            <svg viewBox="0 0 24 24"><path d="M12 21.05c-.35 0-.7-.13-.97-.4l-9.03-9.03c-3.85-3.85-3.85-10.1 0-13.95 3.85-3.85 10.1-3.85 13.95 0l9.03 9.03c.54.54.54 1.41 0 1.95l-9.03 9.03c-.27.27-.62.4-.97.4z" opacity="0.3"/><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61l1.42-1.42C5.46 15.15 5 13.64 5 12c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.64-.46 3.15-1.39 4.19l1.42 1.42C20.26 16.07 21 14.12 21 12c0-4.97-4.03-9-9-9z"/></svg>
+                            <!-- Battery Icon -->
+                            <svg viewBox="0 0 24 24"><path d="M17 5H3a2 2 0 00-2 2v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2zm-1 11H4V8h12v8zm5-7h-1v6h1V9z"/></svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Notification Toast Simulator -->
+                    <div id="app-toast-notification" class="app-toast">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                        <span id="app-toast-text">Notificação de Alerta</span>
+                    </div>
+
+                    <!-- App View Container -->
+                    <div class="app-views" id="app-views-scroller">
+                        
+                        <!-- ==========================================
+                           VIEW 1: LOGIN TELA
+                           ========================================== -->
+                        <div id="screen-login" class="view-screen active">
+                            <div class="login-container">
+                                <div class="login-header">
+                                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M50,10 L80,25 L80,55 C80,75 50,90 50,90 C50,90 20,75 20,55 L20,25 L50,10 Z" fill="#0B2545" stroke="#F4B942" stroke-width="4"/>
+                                        <path d="M50,20 L70,32 L70,52 C70,67 50,78 50,78 C50,78 30,67 30,52 L30,32 L50,20 Z" fill="#F4B942"/>
+                                    </svg>
+                                    <h2>Rio Largo Digital</h2>
+                                    <p>Identidade única para serviços municipais</p>
+                                </div>
+                                <div class="login-form">
+                                    <div class="input-group">
+                                        <label for="login-cpf">CPF do Cidadão</label>
+                                        <input type="text" id="login-cpf" class="input-field" placeholder="000.000.000-00" value="123.456.789-00">
+                                    </div>
+                                    <div class="login-options">
+                                        <label class="login-lgpd">
+                                            <input type="checkbox" checked id="chk-lgpd">
+                                            <span>Aceito os termos da LGPD e uso de dados municipais.</span>
+                                        </label>
+                                    </div>
+                                    <button class="btn-primary" id="btn-login-submit" onclick="handleLogin()">Entrar com CPF</button>
+                                </div>
+                                <div class="login-footer">
+                                    <button class="biometrics-btn" onclick="handleBiometrics()">
+                                        <svg viewBox="0 0 24 24"><path d="M12 1c-5.52 0-10 4.48-10 10s4.48 10 10 10 10-4.48 10-10-4.48-10-10-10zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/></svg>
+                                        Simular FaceID / Biometria
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ==========================================
+                           VIEW 2: HOME SCREEN
+                           ========================================== -->
+                        <div id="screen-home" class="view-screen">
+                            <div class="home-header">
+                                <div class="user-profile-summary">
+                                    <div class="user-avatar" onclick="navigateTo('perfil')">G</div>
+                                    <div class="user-welcome">
+                                        <h3>Bom dia,</h3>
+                                        <h2>Gustavo Santos</h2>
+                                    </div>
+                                </div>
+                                <div class="accessibility-actions">
+                                    <button class="action-circle-btn" onclick="toggleContrast()" title="Alto Contraste">
+                                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-15v14c3.3 0 6-2.7 6-6s-2.7-6-6-6z"/></svg>
+                                    </button>
+                                    <button class="action-circle-btn" onclick="toggleFontSize()" title="Tamanho da Fonte">
+                                        <svg viewBox="0 0 24 24"><path d="M9 4v3h5v12h3V7h5V4H9zm-6 8h3v7h3v-7h3V9H3v3z"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Resumo do Cidadão Widget -->
+                            <div class="summary-widget">
+                                <h4 class="summary-title">Resumo do Cidadão</h4>
+                                <div class="summary-grid">
+                                    <div class="summary-item" onclick="navigateTo('saude')">
+                                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+                                        <span>1 Consulta Agendada</span>
+                                    </div>
+                                    <div class="summary-item" onclick="navigateTo('perfil')">
+                                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4 6h-6v2h6V9zm0 4h-6v2h6v-2z"/></svg>
+                                        <span>1 Protocolo em Andamento</span>
+                                    </div>
+                                    <div class="summary-item" onclick="navigateTo('tributos')">
+                                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+                                        <span>IPTU Aberto (Vence dia 10)</span>
+                                    </div>
+                                    <div class="summary-item" onclick="navigateTo('educacao')">
+                                        <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5.89 12.55L12 15.9l6.11-3.35c.02.15.03.3.03.45 0 2.22-3.14 4-6.14 4s-6.14-1.78-6.14-4c0-.15.01-.3.03-.45z"/></svg>
+                                        <span>1 Filho Matriculado</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Meu Bairro Snippet -->
+                            <div class="bairro-widget" onclick="navigateTo('meubairro')">
+                                <div class="bairro-widget-header">
+                                    <span class="bairro-badge">Meu Bairro: Centro</span>
+                                    <small style="color: var(--text-secondary); font-size: 10px;">Ver tudo ➔</small>
+                                </div>
+                                <div class="bairro-news-item">
+                                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                                    <span>Falta de água programada amanhã (06/07)</span>
+                                </div>
+                                <div class="bairro-news-item" style="color: var(--accent-green);">
+                                    <svg viewBox="0 0 24 24" style="fill: var(--accent-green);"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                    <span>Coleta de lixo regularizada às 19:00</span>
+                                </div>
+                            </div>
+
+                            <!-- Services Grid -->
+                            <div class="section-title-row">
+                                <h4>Serviços Municipais</h4>
+                            </div>
+                            <div class="services-grid">
+                                <div class="service-card" onclick="navigateTo('saude')">
+                                    <div class="service-card-icon bg-saude">
+                                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+                                    </div>
+                                    <span>Saúde</span>
+                                </div>
+                                <div class="service-card" onclick="navigateTo('educacao')">
+                                    <div class="service-card-icon bg-educacao">
+                                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+                                    </div>
+                                    <span>Educação</span>
+                                </div>
+                                <div class="service-card" onclick="navigateTo('infra')">
+                                    <div class="service-card-icon bg-infra">
+                                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2zm-2-7H7v2h10V6zm-5 12H7v2h5v-2z"/></svg>
+                                    </div>
+                                    <span>Zeladoria</span>
+                                </div>
+                                <div class="service-card" onclick="navigateTo('tributos')">
+                                    <div class="service-card-icon bg-tributos">
+                                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                                    </div>
+                                    <span>Tributos</span>
+                                </div>
+                                <div class="service-card" onclick="navigateTo('social')">
+                                    <div class="service-card-icon bg-social">
+                                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                                    </div>
+                                    <span>Sociais</span>
+                                </div>
+                                <div class="service-card" onclick="navigateTo('emprego')">
+                                    <div class="service-card-icon bg-emprego">
+                                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
+                                    </div>
+                                    <span>Vagas</span>
+                                </div>
+                                <div class="service-card" onclick="navigateTo('transporte')">
+                                    <div class="service-card-icon bg-transporte">
+                                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c-4.42 0-8 3.58-8 8v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-4.42-3.58-8-8-8zm-4 16c-.83 0-1.5-.67-1.5-1.5S7.17 15 8 15s1.5.67 1.5 1.5S8.83 18 8 18zm8 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5S16.83 18 16 18zm1.5-6h-11V7h11v5z"/></svg>
+                                    </div>
+                                    <span>Ônibus</span>
+                                </div>
+                                <div class="service-card" onclick="navigateTo('seguranca')">
+                                    <div class="service-card-icon bg-seguranca">
+                                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                    </div>
+                                    <span>SOS</span>
+                                </div>
+                                <div class="service-card" onclick="navigateTo('meubairro')">
+                                    <div class="service-card-icon bg-ambiente">
+                                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                    </div>
+                                    <span>Meu Bairro</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ==========================================
+                           VIEW 3: SAÚDE SCREEN
+                           ========================================== -->
+                        <div id="screen-saude" class="view-screen">
+                            <div class="view-header">
+                                <button class="back-btn" onclick="navigateTo('home')">
+                                    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                                </button>
+                                <h3>Portal da Saúde</h3>
+                            </div>
+
+                            <!-- Cartão SUS Digital -->
+                            <div class="sus-card" onclick="flipSusCard()">
+                                <div class="sus-card-header">
+                                    <div class="sus-logo">
+                                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                                        <span>SUS</span>
+                                    </div>
+                                    <span>Ministério da Saúde</span>
+                                </div>
+                                <div class="sus-card-number" id="sus-card-number-lbl">898 0012 3456 7890</div>
+                                <div class="sus-card-name">Gustavo Santos de Oliveira</div>
+                                <div class="sus-card-footer">
+                                    <span>Nasc: 12/08/1990</span>
+                                    <span>Nacionalidade: BR</span>
+                                </div>
+                            </div>
+
+                            <!-- Medicamento Finder -->
+                            <div class="med-finder-box">
+                                <h4 class="summary-title" style="color: var(--primary); margin-bottom: 8px;">Estoque de Medicamentos</h4>
+                                <input type="text" id="input-med-search" class="input-field" placeholder="Buscar Dipirona, Ibuprofeno..." style="padding: 10px 14px;" onkeyup="searchMedicine()">
+                                <div class="med-search-results" id="med-results-list">
+                                    <!-- Dynamic elements from JS -->
+                                    <div class="med-item">
+                                        <div class="med-info">
+                                            <h5>Dipirona Monoidratada 500mg</h5>
+                                            <p>UBS Centro - 120 unidades disponíveis</p>
+                                        </div>
+                                        <span class="med-status available">Disponível</span>
+                                    </div>
+                                    <div class="med-item">
+                                        <div class="med-info">
+                                            <h5>Ibuprofeno 600mg</h5>
+                                            <p>UBS Lourenço de Albuquerque - Sem estoque</p>
+                                        </div>
+                                        <span class="med-status unavailable">Indisponível</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Appointments List -->
+                            <h4 style="font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 8px;">Próximas Consultas</h4>
+                            <div class="appointment-list">
+                                <div class="appointment-card">
+                                    <div class="appointment-details">
+                                        <h5>Clínico Geral - Dr. Fábio Melo</h5>
+                                        <p>UBS Centro - Amanhã, às 14:30</p>
+                                    </div>
+                                    <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: var(--accent-green);"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ==========================================
+                           VIEW 4: EDUCAÇÃO SCREEN
+                           ========================================== -->
+                        <div id="screen-educacao" class="view-screen">
+                            <div class="view-header">
+                                <button class="back-btn" onclick="navigateTo('home')">
+                                    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                                </button>
+                                <h3>Educação</h3>
+                            </div>
+
+                            <!-- Estudante Card -->
+                            <div class="student-card">
+                                <div class="student-card-header">
+                                    <div class="student-info">
+                                        <h4>Lucas Santos (Filho)</h4>
+                                        <p>Matrícula: #RL-2024-883</p>
+                                    </div>
+                                    <span class="school-badge">6º Ano - Fundamental II</span>
+                                </div>
+                                <p style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;"><strong>Escola:</strong> Escola Municipal Dr. Afonso de Melo</p>
+                                
+                                <h5 style="font-size: 11px; margin-bottom: 6px; font-weight: 700; color: var(--primary);">Boletim Escolar - 2º Bimestre</h5>
+                                <table class="boletim-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Disciplina</th>
+                                            <th>Nota</th>
+                                            <th>Freq.</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Matemática</td>
+                                            <td><span class="grade-badge good">8.5</span></td>
+                                            <td>98%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>L. Portuguesa</td>
+                                            <td><span class="grade-badge good">9.0</span></td>
+                                            <td>96%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>História</td>
+                                            <td><span class="grade-badge bad">5.5</span></td>
+                                            <td>92%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Online Matrícula Suggestion -->
+                            <div class="bairro-widget" style="border-left: 4px solid var(--accent);">
+                                <h4 style="font-size: 11px; color: var(--primary); font-weight: 800; text-transform: uppercase;">Matrícula Inteligente 2027</h4>
+                                <p style="font-size: 10px; color: var(--text-secondary); margin: 6px 0;">Com base na sua geolocalização residencial cadastrada (Centro), a escola mais próxima com vagas abertas é:</p>
+                                <strong style="font-size: 11px; display: block; color: var(--primary);">Escola Municipal Dr. Afonso de Melo (450m)</strong>
+                                <button class="btn-primary" style="padding: 8px; font-size: 11px; margin-top: 10px;" onclick="simulateMatricula()">Matricular Online</button>
+                            </div>
+                        </div>
+
+                        <!-- ==========================================
+                           VIEW 5: INFRAESTRUTURA SCREEN (REPORT PROBLEMA)
+                           ========================================== -->
+                        <div id="screen-infra" class="view-screen">
+                            <div class="view-header">
+                                <button class="back-btn" onclick="navigateTo('home')">
+                                    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                                </button>
+                                <h3>Zeladoria e Infraestrutura</h3>
+                            </div>
+
+                            <div class="report-step-indicator">
+                                <div class="step-indicator-item active" id="step-id-1"><span>1</span> Tipo</div>
+                                <div class="step-indicator-item" id="step-id-2"><span>2</span> Foto</div>
+                                <div class="step-indicator-item" id="step-id-3"><span>3</span> Enviar</div>
+                            </div>
+
+                            <!-- Step 1: Select Type -->
+                            <div id="infra-step-1-content">
+                                <div class="input-group">
+                                    <label for="select-infra-type">Tipo de Ocorrência</label>
+                                    <select id="select-infra-type" class="input-field">
+                                        <option value="buraco">Buraco na Via / Asfalto</option>
+                                        <option value="lampada">Lâmpada de Poste Apagada</option>
+                                        <option value="lixo">Lixo Acumulado</option>
+                                        <option value="vazamento">Vazamento de Água/Esgoto</option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <label for="input-infra-desc">Descrição do Problema</label>
+                                    <textarea id="input-infra-desc" class="input-field" placeholder="Escreva mais detalhes..." style="height: 80px; resize: none; font-size: 12px;"></textarea>
+                                </div>
+                                <button class="btn-primary" onclick="goToInfraStep(2)">Próximo Passo</button>
+                            </div>
+
+                            <!-- Step 2: Add Photo -->
+                            <div id="infra-step-2-content" style="display: none;">
+                                <label style="display:block; font-size: 11px; font-weight:700; color: var(--text-primary); margin-bottom: 8px;">Adicionar Foto</label>
+                                <div class="photo-upload-placeholder" onclick="simulateCameraPhoto()" id="infra-photo-box">
+                                    <svg viewBox="0 0 24 24"><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
+                                    <span>Clique para simular foto da câmera</span>
+                                </div>
+                                <div class="geolocation-mock">
+                                    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                    <span>Localizado: Av. Fernando Collor, Centro, Rio Largo</span>
+                                </div>
+                                <div style="display: flex; gap: 8px;">
+                                    <button class="btn-primary" style="background-color: var(--text-secondary);" onclick="goToInfraStep(1)">Voltar</button>
+                                    <button class="btn-primary" onclick="goToInfraStep(3)">Próximo</button>
+                                </div>
+                            </div>
+
+                            <!-- Step 3: Send & Protocol -->
+                            <div id="infra-step-3-content" style="display: none;">
+                                <div style="text-align: center; padding: 20px 10px;" id="infra-success-box">
+                                    <svg viewBox="0 0 24 24" style="width: 48px; height: 48px; fill: var(--accent-green); margin-bottom: 12px;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                                    <h4 style="color: var(--primary); font-size: 14px; font-weight: 800;">Tudo Pronto para Enviar!</h4>
+                                    <p style="font-size: 11px; color: var(--text-secondary); margin-top: 6px;">Ao confirmar, seu chamado será enviado e registrado na central de monitoramento municipal.</p>
+                                    <button class="btn-primary" style="margin-top: 18px;" onclick="submitInfraOcorrencia()">Confirmar e Gerar Protocolo</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ==========================================
+                           VIEW 6: TRIBUTOS SCREEN
+                           ========================================== -->
+                        <div id="screen-tributos" class="view-screen">
+                            <div class="view-header">
+                                <button class="back-btn" onclick="navigateTo('home')">
+                                    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                                </button>
+                                <h3>Impostos e Tributos</h3>
+                            </div>
+
+                            <div class="tributo-card">
+                                <div style="display:flex; justify-content:space-between; font-size: 10px; font-weight:700; color: var(--text-secondary);">
+                                    <span>IPTU Cota Única - Ano Exercício 2026</span>
+                                    <span style="color: var(--accent-red); background-color: var(--accent-red-light); padding:2px 6px; border-radius:4px;">Aberto</span>
+                                </div>
+                                <div class="tributo-amount">R$ 240,00</div>
+                                <p style="font-size: 11px; color: var(--text-secondary);">Vencimento: 10/07/2026. Desconto de 10% na cota única.</p>
+                                
+                                <div class="pix-box" id="iptu-pix-box">
+                                    <strong style="font-size: 11px; display:block; margin-bottom: 6px; color: var(--primary);">Pagamento via PIX Copia e Cola</strong>
+                                    <span class="pix-code">00020101021226850014br.gov.bcb.pix0123prefeiturariolargo2026iptu24000</span>
+                                    <button class="btn-primary" style="padding: 8px; font-size: 11px;" onclick="copyPixCode()">Copiar Código PIX</button>
+                                </div>
+                                <button class="btn-primary" style="background-color: var(--primary-light);" onclick="payWithCard()">Pagar com Cartão</button>
+                            </div>
+                        </div>
+
+                        <!-- ==========================================
+                           VIEW 7: SOCIAL SCREEN
+                           ========================================== -->
+                        <div id="screen-social" class="view-screen">
+                            <div class="view-header">
+                                <button class="back-btn" onclick="navigateTo('home')">
+                                    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                                </button>
+                                <h3>Assistência Social</h3>
+                            </div>
+                            
+                            <div class="student-card">
+                                <h4 style="color: var(--primary); font-weight:800; font-size:12px; margin-bottom:6px;">Cadastro Único (CadÚnico)</h4>
+                                <p style="font-size: 11px; color: var(--text-secondary); line-height: 1.4;">Seu cadastro está atualizado e ativo para o recebimento de benefícios sociais. Próxima atualização obrigatória em Maio de 2028.</p>
+                                <div style="display:flex; justify-content:space-between; margin-top: 10px; font-size:11px; font-weight:700;">
+                                    <span>Nis: 123.45678.90-1</span>
+                                    <span style="color: var(--accent-green);">ATIVO</span>
+                                </div>
+                            </div>
+                            
+                            <h4 style="font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 10px;">Programas e Agendamentos</h4>
+                            <button class="btn-primary" style="background-color: var(--primary-light); margin-bottom:8px;" onclick="simulateSocialAppointment()">Agendar Atendimento no CRAS Centro</button>
+                            <button class="btn-primary" style="background-color: var(--text-secondary);">Ver Meus Benefícios Ativos</button>
+                        </div>
+
+                        <!-- ==========================================
+                           VIEW 8: SOS SEGURANÇA SCREEN
+                           ========================================== -->
+                        <div id="screen-seguranca" class="view-screen">
+                            <div class="view-header">
+                                <button class="back-btn" onclick="navigateTo('home')">
+                                    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                                </button>
+                                <h3 style="color: var(--accent-red);">Centro de Emergências SOS</h3>
+                            </div>
+                            
+                            <div style="text-align: center; margin: 24px 0;">
+                                <p style="font-size: 12px; color: var(--text-secondary); font-weight: 600; margin-bottom: 16px;">Mantenha o botão pressionado para chamar socorro imediato.</p>
+                                <button id="btn-sos-panic" class="service-card-icon bg-seguranca" style="width:130px; height:130px; border-radius:50%; margin:0 auto; cursor:pointer; border: 8px solid var(--accent-red-light); box-shadow: 0 0 25px rgba(239, 68, 68, 0.4);" onclick="triggerSOS()">
+                                    <span style="color:white; font-size: 18px; font-weight: 800; text-transform: uppercase;">SOS</span>
+                                </button>
+                                <div id="sos-countdown" style="font-size: var(--font-size-md); font-weight:800; color: var(--accent-red); margin-top:12px;"></div>
+                            </div>
+                            
+                            <h4 style="font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 8px;">Telefones de Emergência Diretos</h4>
+                            <div style="display:flex; flex-direction:column; gap: 8px;">
+                                <a href="tel:190" class="btn-primary" style="background-color: #374151; text-align: center; text-decoration: none; font-size: 12px; display:block; padding:10px;">Polícia Militar (190)</a>
+                                <a href="tel:192" class="btn-primary" style="background-color: #EF4444; text-align: center; text-decoration: none; font-size: 12px; display:block; padding:10px;">SAMU (192)</a>
+                                <a href="tel:199" class="btn-primary" style="background-color: #F59E0B; text-align: center; text-decoration: none; font-size: 12px; display:block; padding:10px;">Defesa Civil (199)</a>
+                            </div>
+                        </div>
+
+                        <!-- ==========================================
+                           VIEW 9: MEU BAIRRO SCREEN
+                           ========================================== -->
+                        <div id="screen-meubairro" class="view-screen">
+                            <div class="view-header">
+                                <button class="back-btn" onclick="navigateTo('home')">
+                                    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                                </button>
+                                <h3>Meu Bairro Inteligente</h3>
+                            </div>
+                            
+                            <div class="student-card" style="border-left: 4px solid var(--accent-blue);">
+                                <h4 style="color: var(--primary); font-size:12px; font-weight:800; margin-bottom:4px;">Obras Próximas no Centro</h4>
+                                <strong style="font-size:11px; display:block; color:var(--text-primary); margin-top:8px;">Construção da Praça Central (80% Concluída)</strong>
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+                                    <span style="font-size: 10px; color: var(--text-secondary);">Prazo: 12/08/2026</span>
+                                    <span style="font-size:10px; font-weight:800; color:var(--accent-blue);" onclick="navigateTo('perfil')">Ver Obra ➔</span>
+                                </div>
+                            </div>
+                            
+                            <h4 style="font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 8px;">Informações do Bairro</h4>
+                            <div class="sec-ranking-list" style="background-color: white; padding: 12px; border-radius: var(--radius-lg); border:1px solid var(--border-color);">
+                                <div class="med-item">
+                                    <span style="font-size: 11px; font-weight: 600;">Coleta de Lixo Seletiva</span>
+                                    <span style="font-size: 11px; font-weight:800; color: var(--accent-green);">Terça e Quinta</span>
+                                </div>
+                                <div class="med-item">
+                                    <span style="font-size: 11px; font-weight: 600;">Posto de Saúde mais Próximo</span>
+                                    <span style="font-size: 11px; font-weight:800; color: var(--accent-blue);">UBS Centro (250m)</span>
+                                </div>
+                                <div class="med-item">
+                                    <span style="font-size: 11px; font-weight: 600;">Feira Livre do Bairro</span>
+                                    <span style="font-size: 11px; font-weight:800; color: var(--accent-dark);">Sábado de Manhã</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ==========================================
+                           VIEW 10: COMUNIDADE FEED
+                           ========================================== -->
+                        <div id="screen-comunidade" class="view-screen">
+                            <div class="view-header">
+                                <button class="back-btn" onclick="navigateTo('home')">
+                                    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                                </button>
+                                <h3>Central de Notícias</h3>
+                            </div>
+                            
+                            <div class="news-feed">
+                                <div class="news-card">
+                                    <div class="news-card-image">
+                                        <!-- Real Image Simulated (using text + color) -->
+                                        <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background: linear-gradient(135deg, #134074, #0b132b); color: white; font-weight:800; font-size:12px;">FOTO DA OBRA DA PRAÇA CENTRAL</div>
+                                        <span class="news-badge">Obras</span>
+                                    </div>
+                                    <div class="news-card-body">
+                                        <div class="news-card-date">Publicado há 2 horas</div>
+                                        <h4 class="news-card-title">Prefeitura avança na revitalização da Praça Central de Rio Largo</h4>
+                                        <p class="news-card-desc">As obras atingiram 80% de conclusão. A nova praça contará com academia ao ar livre, playground moderno, iluminação 100% LED e Wi-Fi público de alta velocidade para os cidadãos.</p>
+                                    </div>
+                                    <div class="news-actions">
+                                        <button class="news-action-btn" id="news-like-btn" onclick="toggleLike()">
+                                            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                                            <span id="news-like-count">142</span> Gostaram
+                                        </button>
+                                        <button class="news-action-btn">
+                                            <svg viewBox="0 0 24 24"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"/></svg>
+                                            Comentar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ==========================================
+                           VIEW 11: CHAT IA SCREEN
+                           ========================================== -->
+                        <div id="screen-chat" class="view-screen">
+                            <div class="view-header">
+                                <button class="back-btn" onclick="navigateTo('home')">
+                                    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                                </button>
+                                <h3>Assistente IA - Rio Largo</h3>
+                            </div>
+                            
+                            <div class="chat-container">
+                                <div class="chat-messages" id="chat-box">
+                                    <div class="chat-bubble ai">
+                                        Olá, Gustavo! Sou a assistente inteligente da Prefeitura de Rio Largo. Como posso lhe ajudar hoje?
+                                    </div>
+                                </div>
+                                <div class="chat-quick-replies">
+                                    <span class="quick-reply-chip" onclick="sendChatPrompt('Como pago meu IPTU?')">Como pagar IPTU?</span>
+                                    <span class="quick-reply-chip" onclick="sendChatPrompt('Como agendar médico?')">Como agendar consulta?</span>
+                                    <span class="quick-reply-chip" onclick="sendChatPrompt('Quais as obras do meu bairro?')">Obras no Centro</span>
+                                </div>
+                                <div class="chat-input-bar">
+                                    <input type="text" id="chat-input" class="chat-input-field" placeholder="Escreva sua pergunta..." onkeypress="handleChatKey(event)">
+                                    <button class="chat-send-btn" onclick="sendChatMsg()">
+                                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ==========================================
+                           VIEW 12: PERFIL DO CIDADÃO SCREEN
+                           ========================================== -->
+                        <div id="screen-perfil" class="view-screen">
+                            <div class="view-header">
+                                <button class="back-btn" onclick="navigateTo('home')">
+                                    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                                </button>
+                                <h3>Perfil do Cidadão</h3>
+                            </div>
+                            
+                            <div style="text-align: center; margin-bottom: 20px;">
+                                <div class="user-avatar" style="width:72px; height:72px; margin: 0 auto 10px auto; font-size:24px;">G</div>
+                                <h4 style="color: var(--primary); font-weight:800; font-size:14px;">Gustavo Santos de Oliveira</h4>
+                                <p style="font-size:10px; color: var(--text-secondary);">Pontos de Cidadania: <strong style="color:var(--accent); font-size:12px;" id="profile-citizenship-pts">350 pts</strong></p>
+                                <span style="background-color: #FEF3C7; color: #D97706; font-size:9px; font-weight:800; padding:2px 8px; border-radius:20px; display:inline-block; margin-top:4px;">CIDADÃO CONSCIENTE</span>
+                            </div>
+
+                            <div style="background-color:white; border-radius:var(--radius-lg); border: 1px solid var(--border-color); padding: 14px; margin-bottom: 16px;">
+                                <h4 style="color: var(--primary); font-size: 11px; font-weight:800; margin-bottom: 10px; text-transform: uppercase;">Meus Protocolos Ativos</h4>
+                                
+                                <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; font-weight:700;">
+                                    <span id="active-protocol-title">Buraco na Via (#RL-3882)</span>
+                                    <span style="color: var(--accent-blue);" id="active-protocol-status-badge">Em Execução</span>
+                                </div>
+                                <div class="timeline-tracker" id="active-protocol-timeline">
+                                    <div class="timeline-step completed">
+                                        <div class="timeline-step-title">Chamado Aberto</div>
+                                        <div class="timeline-step-desc">Hoje, 16:35 por Gustavo Santos</div>
+                                    </div>
+                                    <div class="timeline-step completed">
+                                        <div class="timeline-step-title">Analisado pela Secretaria</div>
+                                        <div class="timeline-step-desc">Hoje, 16:36 pela Infraestrutura</div>
+                                    </div>
+                                    <div class="timeline-step active">
+                                        <div class="timeline-step-title">Equipe em Rota de Serviço</div>
+                                        <div class="timeline-step-desc">Cronograma estimado: Conclusão hoje</div>
+                                    </div>
+                                </div>
+                                <button class="btn-primary" id="btn-satisfaction-trigger" style="margin-top: 10px; font-size: 11px; padding: 10px; background-color: var(--accent-green); display:none;" onclick="showSatisfactionModal()">Avaliar Este Serviço</button>
+                            </div>
+                        </div>
+
+                        <!-- ==========================================
+                           MODAIS INTERATIVOS DENTRO DO APP
+                           ========================================== -->
+                        <!-- Modal de Avaliação de Serviço (Uber Style) -->
+                        <div id="modal-satisfaction" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:1002; align-items:center; justify-content:center; padding:18px;">
+                            <div style="background:var(--bg-card); width:100%; border-radius:var(--radius-lg); padding:20px; text-align:center; animation: slideIn 0.3s ease;">
+                                <h3 style="color:var(--primary); font-weight:800; font-size: 14px;">Como foi sua experiência?</h3>
+                                <p style="font-size:11px; color:var(--text-secondary); margin-top:6px;">Como você avalia a resolução do chamado sobre <strong>Iluminação/Asfalto</strong>?</p>
+                                
+                                <div class="stars-container">
+                                    <button class="star-rating-btn" onclick="rateService(1)" id="star-1">
+                                        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    </button>
+                                    <button class="star-rating-btn" onclick="rateService(2)" id="star-2">
+                                        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    </button>
+                                    <button class="star-rating-btn" onclick="rateService(3)" id="star-3">
+                                        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    </button>
+                                    <button class="star-rating-btn" onclick="rateService(4)" id="star-4">
+                                        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    </button>
+                                    <button class="star-rating-btn" onclick="rateService(5)" id="star-5">
+                                        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    </button>
+                                </div>
+                                
+                                <textarea id="txt-rating-comment" class="input-field" placeholder="Adicione um comentário (opcional)..." style="height:60px; font-size:11px; resize:none; margin-bottom:12px;"></textarea>
+                                
+                                <button class="btn-primary" onclick="submitServiceRating()">Enviar Avaliação</button>
+                            </div>
+                        </div>
+
+                    </div> <!-- End of App Views Scroller -->
+
+                    <!-- Bottom Nav Frame -->
+                    <nav class="bottom-nav" id="app-bottom-navbar">
+                        <button class="nav-item active" onclick="navigateTo('home')">
+                            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                            Home
+                        </button>
+                        <button class="nav-item" onclick="navigateTo('meubairro')">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                            Mapa Bairro
+                        </button>
+                        <button class="nav-item animate-sos" onclick="navigateTo('seguranca')" style="color:var(--accent-red); font-weight:800;">
+                            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            SOS
+                        </button>
+                        <button class="nav-item" onclick="navigateTo('chat')">
+                            <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+                            Falar IA
+                        </button>
+                        <button class="nav-item" onclick="navigateTo('perfil')">
+                            <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                            Perfil
+                        </button>
+                    </nav>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- COLUMN 2: DESKTOP MAYOR DASHBOARD -->
+        <section id="column-dashboard" class="dashboard-column">
+            
+            <!-- Dashboard Top Header -->
+            <div class="dashboard-header">
+                <div class="dashboard-title-box">
+                    <h2>Centro de Inteligência de Rio Largo</h2>
+                    <p>Painel de Gestão Municipal em Tempo Real (Gabinete do Prefeito)</p>
+                </div>
+                <div class="dashboard-live-indicator">
+                    <span style="display:inline-block; width:8px; height:8px; background-color:var(--accent-green); border-radius:50%; margin-right:4px;"></span>
+                    MONITORAMENTO AO VIVO
+                </div>
+            </div>
+
+            <!-- KPI Summary Cards -->
+            <div class="dashboard-grid">
+                <div class="kpi-card">
+                    <div class="kpi-card-header">
+                        <span>SATISFAÇÃO DO CIDADÃO (NPS)</span>
+                        <span class="kpi-trend up" id="lbl-nps-trend">▲ 4%</span>
+                    </div>
+                    <div class="kpi-card-val" id="val-nps">78</div>
+                    <p style="font-size:10px; color: var(--text-secondary); margin-top: 4px;">Zona de Excelência (Meta: 80)</p>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-card-header">
+                        <span>OCORRÊNCIAS EM ABERTO</span>
+                        <span class="kpi-trend down" id="lbl-open-protocols-trend">▼ 12%</span>
+                    </div>
+                    <div class="kpi-card-val" id="val-open-protocols">24</div>
+                    <p style="font-size:10px; color: var(--text-secondary); margin-top: 4px;">Tempo médio de resolução: 4.2h</p>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-card-header">
+                        <span>PONTOS DE ENGAJAMENTO</span>
+                        <span class="kpi-trend up">▲ 22%</span>
+                    </div>
+                    <div class="kpi-card-val">84.2K</div>
+                    <p style="font-size:10px; color: var(--text-secondary); margin-top: 4px;">Cidadãos ativos na gamificação</p>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-card-header">
+                        <span>ORÇAMENTO EXECUTADO</span>
+                        <span style="font-size:10px; font-weight:700; color:var(--accent-blue);">74.2%</span>
+                    </div>
+                    <div class="kpi-card-val" style="font-size: var(--font-size-xl); margin-top:4px;">R$ 14.8M</div>
+                    <p style="font-size:10px; color: var(--text-secondary); margin-top: 4px;">Investimento total em Rio Largo</p>
+                </div>
+            </div>
+
+            <!-- Heatmap + secretary satisfaction row -->
+            <div class="dashboard-panels-row">
+                
+                <!-- MAPA DE CALOR INTERATIVO -->
+                <div class="dashboard-panel">
+                    <div class="panel-header">
+                        <h3>Mapa de Calor de Demandas Municipais</h3>
+                        <span style="font-size: 10px; color: var(--text-secondary); font-weight:700;">Localização em tempo real</span>
+                    </div>
+                    <div class="simulated-map-container">
+                        <div class="simulated-map-grid"></div>
+                        <div class="map-river"></div>
+                        
+                        <!-- Streets representation -->
+                        <div class="map-street map-street-h" style="top: 80px;"></div>
+                        <div class="map-street map-street-h" style="top: 140px;"></div>
+                        <div class="map-street map-street-v" style="left: 100px;"></div>
+                        <div class="map-street map-street-v" style="left: 240px;"></div>
+                        
+                        <!-- Map Pins -->
+                        <div class="map-pin pin-pothole" style="top: 60px; left: 80px;" title="Buraco - Mutirão"></div>
+                        <div class="map-pin pin-light" style="top: 120px; left: 160px;" title="Poste sem luz - Lourenço de Albuquerque"></div>
+                        <div class="map-pin pin-water" style="top: 150px; left: 220px;" title="Vazamento - Centro"></div>
+                        <div class="map-pin pin-pothole" style="top: 90px; left: 280px;" title="Buraco - Tabuleiro"></div>
+                        
+                        <!-- Dynamic Pothole Pin from Citizen interaction -->
+                        <div class="map-pin pin-pothole" id="dynamic-map-pin" style="top: 40px; left: 180px; display: none;" title="Ocorrência Gustavo"></div>
+
+                        <!-- Labels -->
+                        <div class="map-neighborhood-labels" style="top:20px; left:40px;">Mutirão</div>
+                        <div class="map-neighborhood-labels" style="top:100px; left:180px;">Centro</div>
+                        <div class="map-neighborhood-labels" style="top:180px; left:40px;">Lourenço</div>
+                    </div>
+                </div>
+
+                <!-- RANKING DAS SECRETARIAS (DESEMPENHO) -->
+                <div class="dashboard-panel">
+                    <div class="panel-header">
+                        <h3>Desempenho e Satisfação das Secretarias</h3>
+                        <span style="font-size: 10px; color: var(--text-secondary); font-weight:700;">Nível de Aprovação</span>
+                    </div>
+                    <div class="sec-ranking-list">
+                        <div class="sec-ranking-item">
+                            <div class="sec-info-row">
+                                <span>Saúde Municipal</span>
+                                <span id="lbl-sec-val-saude">8.2 / 10</span>
+                            </div>
+                            <div class="sec-progress-bar-bg">
+                                <div class="sec-progress-bar-fill" id="fill-sec-saude" style="width: 82%;"></div>
+                            </div>
+                        </div>
+                        <div class="sec-ranking-item">
+                            <div class="sec-info-row">
+                                <span>Educação e Cultura</span>
+                                <span id="lbl-sec-val-educacao">8.8 / 10</span>
+                            </div>
+                            <div class="sec-progress-bar-bg">
+                                <div class="sec-progress-bar-fill" id="fill-sec-educacao" style="width: 88%;"></div>
+                            </div>
+                        </div>
+                        <div class="sec-ranking-item">
+                            <div class="sec-info-row">
+                                <span>Infraestrutura e Zeladoria</span>
+                                <span id="lbl-sec-val-infra">7.1 / 10</span>
+                            </div>
+                            <div class="sec-progress-bar-bg">
+                                <div class="sec-progress-bar-fill" id="fill-sec-infra" style="width: 71%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Suggestion & Logs Row -->
+            <div class="dashboard-bottom-row">
+                
+                <!-- REGISTRO DE ATIVIDADES E FEEDBACKS EM TEMPO REAL -->
+                <div class="dashboard-panel">
+                    <div class="panel-header">
+                        <h3>Feed de Feedback e Atividades dos Cidadãos</h3>
+                        <span style="font-size: 10px; color: var(--text-secondary); font-weight:700;">Ao Vivo</span>
+                    </div>
+                    <div class="log-list" id="dashboard-activity-log">
+                        <div class="log-item" style="border-left-color: var(--accent-blue);">
+                            <span class="log-item-text">Gustavo Santos de Oliveira pagou o IPTU 2026 via PIX</span>
+                            <span class="log-item-time">Agora mesmo</span>
+                        </div>
+                        <div class="log-item">
+                            <span class="log-item-text">Serviço de Iluminação Pública no bairro Centro foi concluído</span>
+                            <span class="log-item-time">Há 3 min</span>
+                        </div>
+                        <div class="log-item" style="border-left-color: var(--accent-green);">
+                            <span class="log-item-text">Lucas Santos foi matriculado online na Escola Dr. Afonso</span>
+                            <span class="log-item-time">Há 10 min</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IA PREFEITURA RECOMENDAÇÕES -->
+                <div class="ai-suggestion-box">
+                    <div class="ai-suggestion-header">
+                        <!-- AI brain icon -->
+                        <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61.13.16.14.41.02.58l-1.9 1.9c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9c.17-.17.43-.16.58.02C8.93 21.26 10.36 22 12 22c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 15c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/></svg>
+                        RECOMENDAÇÕES DA INTELIGÊNCIA ARTIFICIAL
+                    </div>
+                    <p class="ai-suggestion-text" id="dashboard-ai-rec">
+                        Com base nas demandas de hoje: A satisfação geral está em <strong>78% (NPS)</strong>. Recomenda-se priorizar as vistorias de iluminação no bairro Centro para elevar o índice geral acima de 80.
+                    </p>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="app.js"></script>
+</body> 
+</html>
+
