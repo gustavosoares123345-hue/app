@@ -1,0 +1,3572 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rio Largo Digital - Super App e Painel de Gestão Municipal</title>
+    <meta name="description" content="Protótipo do Super App Rio Largo Digital e Painel de Gestão em Tempo Real do Prefeito. Transformando a gestão pública municipal.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ==========================================
+       TOP SYSTEM BAR (PERSISTENT WRAPPER)
+       ========================================== -->
+    <header class="system-header">
+        <div class="system-logo">
+            <!-- Municipal Crest SVG Mock -->
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50,10 L80,25 L80,55 C80,75 50,90 50,90 C50,90 20,75 20,55 L20,25 L50,10 Z" fill="#0B2545" stroke="#F4B942" stroke-width="4"/>
+                <path d="M50,20 L70,32 L70,52 C70,67 50,78 50,78 C50,78 30,67 30,52 L30,32 L50,20 Z" fill="#F4B942"/>
+                <circle cx="50" cy="45" r="12" fill="#10B981"/>
+                <path d="M42,45 L48,51 L58,39" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div>
+                <h1>Rio Largo <span>Digital</span><span class="system-tag">GOV.br</span></h1>
+            </div>
+        </div>
+        
+        <div class="system-tabs">
+            <button id="btn-tab-both" class="system-tab-btn active" onclick="switchView('both')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2 4h20v16H2V4zm2 2v12h16V6H4zm1 1h6v10H5V7zm8 0h6v4h-6V7zm0 6h6v4h-6v-4z"/></svg>
+                Visão Integrada (WOW!)
+            </button>
+            <button id="btn-tab-app" class="system-tab-btn" onclick="switchView('app')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 18H7V5h10v14z"/></svg>
+                Apenas Aplicativo
+            </button>
+            <button id="btn-tab-dash" class="system-tab-btn" onclick="switchView('dash')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 14H5v-4h6v4zm0-6H5V7h6v4zm8 6h-6v-4h6v4zm0-6h-6V7h6v4z"/></svg>
+                Painel do Prefeito
+            </button>
+        </div>
+    </header>
+
+    <!-- ==========================================
+       MAIN WORKSPACE (GRID CONTAINER)
+       ========================================== -->
+    <main id="main-workspace" class="workspace">
+        
+        <!-- COLUMN 1: SMARTPHONE SIMULATOR (CITIZEN APP) -->
+        <section id="column-app" class="phone-column">
+            <div class="phone-mockup">
+                
+                <!-- Home Indicator Bottom Bar -->
+                <div class="phone-home-indicator"></div>
+                
+                <!-- Notch -->
+                <div class="phone-notch"></div>
+                
+                <div class="phone-screen" id="phone-screen-container">
+                    
+                    <!-- Simulated Status Bar -->
+                    <div class="phone-status-bar">
+                        <span id="phone-clock">16:30</span>
+                        <div class="phone-status-icons">
+                            <!-- Signal Icon -->
+                            <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.07 19.58 10.49 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 15c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/></svg>
+                            <!-- Wifi Icon -->
+                            <svg viewBox="0 0 24 24"><path d="M12 21.05c-.35 0-.7-.13-.97-.4l-9.03-9.03c-3.85-3.85-3.85-10.1 0-13.95 3.85-3.85 10.1-3.85 13.95 0l9.03 9.03c.54.54.54 1.41 0 1.95l-9.03 9.03c-.27.27-.62.4-.97.4z" opacity="0.3"/><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61l1.42-1.42C5.46 15.15 5 13.64 5 12c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.64-.46 3.15-1.39 4.19l1.42 1.42C20.26 16.07 21 14.12 21 12c0-4.97-4.03-9-9-9z"/></svg>
+                            <!-- Battery Icon -->
+                            <svg viewBox="0 0 24 24"><path d="M17 5H3a2 2 0 00-2 2v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2zm-1 11H4V8h12v8zm5-7h-1v6h1V9z"/></svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Notification Toast Simulator -->
+                    <div id="app-toast-notification" class="app-toast">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                        <span id="app-toast-text">Notificação de Alerta</span>
+                    </div>
+
+                    <!-- App View Container -->
+                    <div class="app-views" id="app-views-scroller">
+                        
+                        <!-- ==========================================
+                           VIEW 1: LOGIN TELA
+                           ========================================== -->
+                        <div id="screen-login" class="view-screen active">
+                            <div class="login-container">
+                                <div class="login-header">
+                                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M50,10 L80,25 L80,55 C80,75 50,90 50,90 C50,90 20,75 20,55 L20,25 L50,10 Z" fill="#0B2545" stroke="#F4B942" stroke-width="4"/>
+                                        <path d="M50,20 L70,32 L70,52 C70,67 50,78 50,78 C50,78 30,67 30,52 L30,32 L50,20 Z" fill="#F4B942"/>
+                                    </svg>
+                                    <h2>Rio Largo Digital</h2>
+                                    <p>Identidade única para serviços municipais</p>
+                                </div>
+                                <div class="login-form">
+                                    <div class="input-group">
+                                        <label for="login-cpf">CPF do Cidadão</label>
+                                        <input type="text" id="login-cpf" class="input-field" placeholder="000.000.000-00" value="123.456.789-00">
+                                    </div>
+                                    <div class="login-options">
+                                        <label class="login-lgpd">
+                                            <input type="checkbox" checked id="chk-lgpd">
+                                            <span>Aceito os termos da LGPD e uso de dados municipais.</span>
+                                        </label>
+                                    </div>
+                                    <button class="btn-primary" id="btn-login-submit" onclick="handleLogin()">Entrar com CPF</button>
+                                </div>
+                                <div class="login-footer">
+                                    <button class="biometrics-btn" onclick="handleBiometrics()">
+                                        <svg viewBox="0 0 24 24"><path d="M12 1c-5.52 0-10 4.48-10 10s4.48 10 10 10 10-4.48 10-10-4.48-10-10-10zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/></svg>
+                                        Simular FaceID / Biometria
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ==========================================
+                           VIEW 2: HOME SCREEN
+                           ========================================== -->
+                        <div id="screen-home" class="view-screen">
+                            <div class="home-header">
+                                <div class="user-profile-summary">
+                                    <div class="user-avatar" onclick="navigateTo('perfil')">G</div>
+                                    <div class="user-welcome">
+                                        <h3>Bom dia,</h3>
+                                        <h2>Gustavo Santos</h2>
+                                    </div>
+                                </div>
+                                <div class="accessibility-actions">
+                                    <button class="action-circle-btn" onclick="toggleContrast()" title="Alto Contraste">
+                                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-15v14c3.3 0 6-2.7 6-6s-2.7-6-6-6z"/></svg>
+                                    </button>
+                                    <button class="action-circle-btn" onclick="toggleFontSize()" title="Tamanho da Fonte">
+                                        <svg viewBox="0 0 24 24"><path d="M9 4v3h5v12h3V7h5V4H9zm-6 8h3v7h3v-7h3V9H3v3z"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Resumo do Cidadão Widget -->
+                            <div class="summary-widget">
+                                <h4 class="summary-title">Resumo do Cidadão</h4>
+                                <div class="summary-grid">
+                                    <div class="summary-item" onclick="navigateTo('saude')">
+                                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+                                        <span>1 Consulta Agendada</span>
+                                    </div>
+                                    <div class="summary-item" onclick="navigateTo('perfil')">
+                                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4 6h-6v2h6V9zm0 4h-6v2h6v-2z"/></svg>
+                                        <span>1 Protocolo em Andamento</span>
+                                    </div>
+                                    <div class="summary-item" onclick="navigateTo('tributos')">
+                                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+                                        <span>IPTU Aberto (Vence dia 10)</span>
+                                    </div>
+                                    <div class="summary-item" onclick="navigateTo('educacao')">
+                                        <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5.89 12.55L12 15.9l6.11-3.35c.02.15.03.3.03.45 0 2.22-3.14 4-6.14 4s-6.14-1.78-6.14-4c0-.15.01-.3.03-.45z"/></svg>
+                                        <span>1 Filho Matriculado</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Meu Bairro Snippet -->
+                            <div class="bairro-widget" onclick="navigateTo('meubairro')">
+                                <div class="bairro-widget-header">
+                                    <span class="bairro-badge">Meu Bairro: Centro</span>
+                                    <small style="color: var(--text-secondary); font-size: 10px;">Ver tudo ➔</small>
+                                </div>
+                                <div class="bairro-news-item">
+                                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                                    <span>Falta de água programada amanhã (06/07)</span>
+                                </div>
+                                <div class="bairro-news-item" style="color: var(--accent-green);">
+                                    <svg viewBox="0 0 24 24" style="fill: var(--accent-green);"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                    <span>Coleta de lixo regularizada às 19:00</span>
+                                </div>
+                            </div>
+
+                            <!-- Services Grid -->
+                            <div class="section-title-row">
+                                <h4>Serviços Municipais</h4>
+                            </div>
+                            <div class="services-grid">
+                                <div class="service-card" onclick="navigateTo('saude')">
+                                    <div class="service-card-icon bg-saude">
+                                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+                                    </div>
+                                    <span>Saúde</span>
+                                </div>
+                                <div class="service-card" onclick="navigateTo('educacao')">
+                                    <div class="service-card-icon bg-educacao">
+                                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+                                    </div>
+                                    <span>Educação</span>
+                                </div>
+                                <div class="service-card" onclick="navigateTo('infra')">
+                                    <div class="service-card-icon bg-infra">
+                                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2zm-2-7H7v2h10V6zm-5 12H7v2h5v-2z"/></svg>
+                                    </div>
+                                    <span>Zeladoria</span>
+                                </div>
+                                <div class="service-card" onclick="navigateTo('tributos')">
+                                    <div class="service-card-icon bg-tributos">
+                                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                                    </div>
+                                    <span>Tributos</span>
+                                </div>
+                                <div class="service-card" onclick="navigateTo('social')">
+                                    <div class="service-card-icon bg-social">
+                                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                                    </div>
+                                    <span>Sociais</span>
+                                </div>
+                                <div class="service-card" onclick="navigateTo('emprego')">
+                                    <div class="service-card-icon bg-emprego">
+                                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
+                                    </div>
+                                    <span>Vagas</span>
+                                </div>
+                                <div class="service-card" onclick="navigateTo('transporte')">
+                                    <div class="service-card-icon bg-transporte">
+                                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c-4.42 0-8 3.58-8 8v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-4.42-3.58-8-8-8zm-4 16c-.83 0-1.5-.67-1.5-1.5S7.17 15 8 15s1.5.67 1.5 1.5S8.83 18 8 18zm8 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5S16.83 18 16 18zm1.5-6h-11V7h11v5z"/></svg>
+                                    </div>
+                                    <span>Ônibus</span>
+                                </div>
+                                <div class="service-card" onclick="navigateTo('seguranca')">
+                                    <div class="service-card-icon bg-seguranca">
+                                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                    </div>
+                                    <span>SOS</span>
+                                </div>
+                                <div class="service-card" onclick="navigateTo('meubairro')">
+                                    <div class="service-card-icon bg-ambiente">
+                                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                    </div>
+                                    <span>Meu Bairro</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ==========================================
+                           VIEW 3: SAÚDE SCREEN
+                           ========================================== -->
+                        <div id="screen-saude" class="view-screen">
+                            <div class="view-header">
+                                <button class="back-btn" onclick="navigateTo('home')">
+                                    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                                </button>
+                                <h3>Portal da Saúde</h3>
+                            </div>
+
+                            <!-- Cartão SUS Digital -->
+                            <div class="sus-card" onclick="flipSusCard()">
+                                <div class="sus-card-header">
+                                    <div class="sus-logo">
+                                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                                        <span>SUS</span>
+                                    </div>
+                                    <span>Ministério da Saúde</span>
+                                </div>
+                                <div class="sus-card-number" id="sus-card-number-lbl">898 0012 3456 7890</div>
+                                <div class="sus-card-name">Gustavo Santos de Oliveira</div>
+                                <div class="sus-card-footer">
+                                    <span>Nasc: 12/08/1990</span>
+                                    <span>Nacionalidade: BR</span>
+                                </div>
+                            </div>
+
+                            <!-- Medicamento Finder -->
+                            <div class="med-finder-box">
+                                <h4 class="summary-title" style="color: var(--primary); margin-bottom: 8px;">Estoque de Medicamentos</h4>
+                                <input type="text" id="input-med-search" class="input-field" placeholder="Buscar Dipirona, Ibuprofeno..." style="padding: 10px 14px;" onkeyup="searchMedicine()">
+                                <div class="med-search-results" id="med-results-list">
+                                    <!-- Dynamic elements from JS -->
+                                    <div class="med-item">
+                                        <div class="med-info">
+                                            <h5>Dipirona Monoidratada 500mg</h5>
+                                            <p>UBS Centro - 120 unidades disponíveis</p>
+                                        </div>
+                                        <span class="med-status available">Disponível</span>
+                                    </div>
+                                    <div class="med-item">
+                                        <div class="med-info">
+                                            <h5>Ibuprofeno 600mg</h5>
+                                            <p>UBS Lourenço de Albuquerque - Sem estoque</p>
+                                        </div>
+                                        <span class="med-status unavailable">Indisponível</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Appointments List -->
+                            <h4 style="font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 8px;">Próximas Consultas</h4>
+                            <div class="appointment-list">
+                                <div class="appointment-card">
+                                    <div class="appointment-details">
+                                        <h5>Clínico Geral - Dr. Fábio Melo</h5>
+                                        <p>UBS Centro - Amanhã, às 14:30</p>
+                                    </div>
+                                    <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: var(--accent-green);"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ==========================================
+                           VIEW 4: EDUCAÇÃO SCREEN
+                           ========================================== -->
+                        <div id="screen-educacao" class="view-screen">
+                            <div class="view-header">
+                                <button class="back-btn" onclick="navigateTo('home')">
+                                    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                                </button>
+                                <h3>Educação</h3>
+                            </div>
+
+                            <!-- Estudante Card -->
+                            <div class="student-card">
+                                <div class="student-card-header">
+                                    <div class="student-info">
+                                        <h4>Lucas Santos (Filho)</h4>
+                                        <p>Matrícula: #RL-2024-883</p>
+                                    </div>
+                                    <span class="school-badge">6º Ano - Fundamental II</span>
+                                </div>
+                                <p style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;"><strong>Escola:</strong> Escola Municipal Dr. Afonso de Melo</p>
+                                
+                                <h5 style="font-size: 11px; margin-bottom: 6px; font-weight: 700; color: var(--primary);">Boletim Escolar - 2º Bimestre</h5>
+                                <table class="boletim-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Disciplina</th>
+                                            <th>Nota</th>
+                                            <th>Freq.</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Matemática</td>
+                                            <td><span class="grade-badge good">8.5</span></td>
+                                            <td>98%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>L. Portuguesa</td>
+                                            <td><span class="grade-badge good">9.0</span></td>
+                                            <td>96%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>História</td>
+                                            <td><span class="grade-badge bad">5.5</span></td>
+                                            <td>92%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Online Matrícula Suggestion -->
+                            <div class="bairro-widget" style="border-left: 4px solid var(--accent);">
+                                <h4 style="font-size: 11px; color: var(--primary); font-weight: 800; text-transform: uppercase;">Matrícula Inteligente 2027</h4>
+                                <p style="font-size: 10px; color: var(--text-secondary); margin: 6px 0;">Com base na sua geolocalização residencial cadastrada (Centro), a escola mais próxima com vagas abertas é:</p>
+                                <strong style="font-size: 11px; display: block; color: var(--primary);">Escola Municipal Dr. Afonso de Melo (450m)</strong>
+                                <button class="btn-primary" style="padding: 8px; font-size: 11px; margin-top: 10px;" onclick="simulateMatricula()">Matricular Online</button>
+                            </div>
+                        </div>
+
+                        <!-- ==========================================
+                           VIEW 5: INFRAESTRUTURA SCREEN (REPORT PROBLEMA)
+                           ========================================== -->
+                        <div id="screen-infra" class="view-screen">
+                            <div class="view-header">
+                                <button class="back-btn" onclick="navigateTo('home')">
+                                    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                                </button>
+                                <h3>Zeladoria e Infraestrutura</h3>
+                            </div>
+
+                            <div class="report-step-indicator">
+                                <div class="step-indicator-item active" id="step-id-1"><span>1</span> Tipo</div>
+                                <div class="step-indicator-item" id="step-id-2"><span>2</span> Foto</div>
+                                <div class="step-indicator-item" id="step-id-3"><span>3</span> Enviar</div>
+                            </div>
+
+                            <!-- Step 1: Select Type -->
+                            <div id="infra-step-1-content">
+                                <div class="input-group">
+                                    <label for="select-infra-type">Tipo de Ocorrência</label>
+                                    <select id="select-infra-type" class="input-field">
+                                        <option value="buraco">Buraco na Via / Asfalto</option>
+                                        <option value="lampada">Lâmpada de Poste Apagada</option>
+                                        <option value="lixo">Lixo Acumulado</option>
+                                        <option value="vazamento">Vazamento de Água/Esgoto</option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <label for="input-infra-desc">Descrição do Problema</label>
+                                    <textarea id="input-infra-desc" class="input-field" placeholder="Escreva mais detalhes..." style="height: 80px; resize: none; font-size: 12px;"></textarea>
+                                </div>
+                                <button class="btn-primary" onclick="goToInfraStep(2)">Próximo Passo</button>
+                            </div>
+
+                            <!-- Step 2: Add Photo -->
+                            <div id="infra-step-2-content" style="display: none;">
+                                <label style="display:block; font-size: 11px; font-weight:700; color: var(--text-primary); margin-bottom: 8px;">Adicionar Foto</label>
+                                <div class="photo-upload-placeholder" onclick="simulateCameraPhoto()" id="infra-photo-box">
+                                    <svg viewBox="0 0 24 24"><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
+                                    <span>Clique para simular foto da câmera</span>
+                                </div>
+                                <div class="geolocation-mock">
+                                    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                    <span>Localizado: Av. Fernando Collor, Centro, Rio Largo</span>
+                                </div>
+                                <div style="display: flex; gap: 8px;">
+                                    <button class="btn-primary" style="background-color: var(--text-secondary);" onclick="goToInfraStep(1)">Voltar</button>
+                                    <button class="btn-primary" onclick="goToInfraStep(3)">Próximo</button>
+                                </div>
+                            </div>
+
+                            <!-- Step 3: Send & Protocol -->
+                            <div id="infra-step-3-content" style="display: none;">
+                                <div style="text-align: center; padding: 20px 10px;" id="infra-success-box">
+                                    <svg viewBox="0 0 24 24" style="width: 48px; height: 48px; fill: var(--accent-green); margin-bottom: 12px;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                                    <h4 style="color: var(--primary); font-size: 14px; font-weight: 800;">Tudo Pronto para Enviar!</h4>
+                                    <p style="font-size: 11px; color: var(--text-secondary); margin-top: 6px;">Ao confirmar, seu chamado será enviado e registrado na central de monitoramento municipal.</p>
+                                    <button class="btn-primary" style="margin-top: 18px;" onclick="submitInfraOcorrencia()">Confirmar e Gerar Protocolo</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ==========================================
+                           VIEW 6: TRIBUTOS SCREEN
+                           ========================================== -->
+                        <div id="screen-tributos" class="view-screen">
+                            <div class="view-header">
+                                <button class="back-btn" onclick="navigateTo('home')">
+                                    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                                </button>
+                                <h3>Impostos e Tributos</h3>
+                            </div>
+
+                            <div class="tributo-card">
+                                <div style="display:flex; justify-content:space-between; font-size: 10px; font-weight:700; color: var(--text-secondary);">
+                                    <span>IPTU Cota Única - Ano Exercício 2026</span>
+                                    <span style="color: var(--accent-red); background-color: var(--accent-red-light); padding:2px 6px; border-radius:4px;">Aberto</span>
+                                </div>
+                                <div class="tributo-amount">R$ 240,00</div>
+                                <p style="font-size: 11px; color: var(--text-secondary);">Vencimento: 10/07/2026. Desconto de 10% na cota única.</p>
+                                
+                                <div class="pix-box" id="iptu-pix-box">
+                                    <strong style="font-size: 11px; display:block; margin-bottom: 6px; color: var(--primary);">Pagamento via PIX Copia e Cola</strong>
+                                    <span class="pix-code">00020101021226850014br.gov.bcb.pix0123prefeiturariolargo2026iptu24000</span>
+                                    <button class="btn-primary" style="padding: 8px; font-size: 11px;" onclick="copyPixCode()">Copiar Código PIX</button>
+                                </div>
+                                <button class="btn-primary" style="background-color: var(--primary-light);" onclick="payWithCard()">Pagar com Cartão</button>
+                            </div>
+                        </div>
+
+                        <!-- ==========================================
+                           VIEW 7: SOCIAL SCREEN
+                           ========================================== -->
+                        <div id="screen-social" class="view-screen">
+                            <div class="view-header">
+                                <button class="back-btn" onclick="navigateTo('home')">
+                                    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                                </button>
+                                <h3>Assistência Social</h3>
+                            </div>
+                            
+                            <div class="student-card">
+                                <h4 style="color: var(--primary); font-weight:800; font-size:12px; margin-bottom:6px;">Cadastro Único (CadÚnico)</h4>
+                                <p style="font-size: 11px; color: var(--text-secondary); line-height: 1.4;">Seu cadastro está atualizado e ativo para o recebimento de benefícios sociais. Próxima atualização obrigatória em Maio de 2028.</p>
+                                <div style="display:flex; justify-content:space-between; margin-top: 10px; font-size:11px; font-weight:700;">
+                                    <span>Nis: 123.45678.90-1</span>
+                                    <span style="color: var(--accent-green);">ATIVO</span>
+                                </div>
+                            </div>
+                            
+                            <h4 style="font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 10px;">Programas e Agendamentos</h4>
+                            <button class="btn-primary" style="background-color: var(--primary-light); margin-bottom:8px;" onclick="simulateSocialAppointment()">Agendar Atendimento no CRAS Centro</button>
+                            <button class="btn-primary" style="background-color: var(--text-secondary);">Ver Meus Benefícios Ativos</button>
+                        </div>
+
+                        <!-- ==========================================
+                           VIEW 8: SOS SEGURANÇA SCREEN
+                           ========================================== -->
+                        <div id="screen-seguranca" class="view-screen">
+                            <div class="view-header">
+                                <button class="back-btn" onclick="navigateTo('home')">
+                                    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                                </button>
+                                <h3 style="color: var(--accent-red);">Centro de Emergências SOS</h3>
+                            </div>
+                            
+                            <div style="text-align: center; margin: 24px 0;">
+                                <p style="font-size: 12px; color: var(--text-secondary); font-weight: 600; margin-bottom: 16px;">Mantenha o botão pressionado para chamar socorro imediato.</p>
+                                <button id="btn-sos-panic" class="service-card-icon bg-seguranca" style="width:130px; height:130px; border-radius:50%; margin:0 auto; cursor:pointer; border: 8px solid var(--accent-red-light); box-shadow: 0 0 25px rgba(239, 68, 68, 0.4);" onclick="triggerSOS()">
+                                    <span style="color:white; font-size: 18px; font-weight: 800; text-transform: uppercase;">SOS</span>
+                                </button>
+                                <div id="sos-countdown" style="font-size: var(--font-size-md); font-weight:800; color: var(--accent-red); margin-top:12px;"></div>
+                            </div>
+                            
+                            <h4 style="font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 8px;">Telefones de Emergência Diretos</h4>
+                            <div style="display:flex; flex-direction:column; gap: 8px;">
+                                <a href="tel:190" class="btn-primary" style="background-color: #374151; text-align: center; text-decoration: none; font-size: 12px; display:block; padding:10px;">Polícia Militar (190)</a>
+                                <a href="tel:192" class="btn-primary" style="background-color: #EF4444; text-align: center; text-decoration: none; font-size: 12px; display:block; padding:10px;">SAMU (192)</a>
+                                <a href="tel:199" class="btn-primary" style="background-color: #F59E0B; text-align: center; text-decoration: none; font-size: 12px; display:block; padding:10px;">Defesa Civil (199)</a>
+                            </div>
+                        </div>
+
+                        <!-- ==========================================
+                           VIEW 9: MEU BAIRRO SCREEN
+                           ========================================== -->
+                        <div id="screen-meubairro" class="view-screen">
+                            <div class="view-header">
+                                <button class="back-btn" onclick="navigateTo('home')">
+                                    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                                </button>
+                                <h3>Meu Bairro Inteligente</h3>
+                            </div>
+                            
+                            <div class="student-card" style="border-left: 4px solid var(--accent-blue);">
+                                <h4 style="color: var(--primary); font-size:12px; font-weight:800; margin-bottom:4px;">Obras Próximas no Centro</h4>
+                                <strong style="font-size:11px; display:block; color:var(--text-primary); margin-top:8px;">Construção da Praça Central (80% Concluída)</strong>
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+                                    <span style="font-size: 10px; color: var(--text-secondary);">Prazo: 12/08/2026</span>
+                                    <span style="font-size:10px; font-weight:800; color:var(--accent-blue);" onclick="navigateTo('perfil')">Ver Obra ➔</span>
+                                </div>
+                            </div>
+                            
+                            <h4 style="font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 8px;">Informações do Bairro</h4>
+                            <div class="sec-ranking-list" style="background-color: white; padding: 12px; border-radius: var(--radius-lg); border:1px solid var(--border-color);">
+                                <div class="med-item">
+                                    <span style="font-size: 11px; font-weight: 600;">Coleta de Lixo Seletiva</span>
+                                    <span style="font-size: 11px; font-weight:800; color: var(--accent-green);">Terça e Quinta</span>
+                                </div>
+                                <div class="med-item">
+                                    <span style="font-size: 11px; font-weight: 600;">Posto de Saúde mais Próximo</span>
+                                    <span style="font-size: 11px; font-weight:800; color: var(--accent-blue);">UBS Centro (250m)</span>
+                                </div>
+                                <div class="med-item">
+                                    <span style="font-size: 11px; font-weight: 600;">Feira Livre do Bairro</span>
+                                    <span style="font-size: 11px; font-weight:800; color: var(--accent-dark);">Sábado de Manhã</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ==========================================
+                           VIEW 10: COMUNIDADE FEED
+                           ========================================== -->
+                        <div id="screen-comunidade" class="view-screen">
+                            <div class="view-header">
+                                <button class="back-btn" onclick="navigateTo('home')">
+                                    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                                </button>
+                                <h3>Central de Notícias</h3>
+                            </div>
+                            
+                            <div class="news-feed">
+                                <div class="news-card">
+                                    <div class="news-card-image">
+                                        <!-- Real Image Simulated (using text + color) -->
+                                        <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background: linear-gradient(135deg, #134074, #0b132b); color: white; font-weight:800; font-size:12px;">FOTO DA OBRA DA PRAÇA CENTRAL</div>
+                                        <span class="news-badge">Obras</span>
+                                    </div>
+                                    <div class="news-card-body">
+                                        <div class="news-card-date">Publicado há 2 horas</div>
+                                        <h4 class="news-card-title">Prefeitura avança na revitalização da Praça Central de Rio Largo</h4>
+                                        <p class="news-card-desc">As obras atingiram 80% de conclusão. A nova praça contará com academia ao ar livre, playground moderno, iluminação 100% LED e Wi-Fi público de alta velocidade para os cidadãos.</p>
+                                    </div>
+                                    <div class="news-actions">
+                                        <button class="news-action-btn" id="news-like-btn" onclick="toggleLike()">
+                                            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                                            <span id="news-like-count">142</span> Gostaram
+                                        </button>
+                                        <button class="news-action-btn">
+                                            <svg viewBox="0 0 24 24"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"/></svg>
+                                            Comentar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ==========================================
+                           VIEW 11: CHAT IA SCREEN
+                           ========================================== -->
+                        <div id="screen-chat" class="view-screen">
+                            <div class="view-header">
+                                <button class="back-btn" onclick="navigateTo('home')">
+                                    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                                </button>
+                                <h3>Assistente IA - Rio Largo</h3>
+                            </div>
+                            
+                            <div class="chat-container">
+                                <div class="chat-messages" id="chat-box">
+                                    <div class="chat-bubble ai">
+                                        Olá, Gustavo! Sou a assistente inteligente da Prefeitura de Rio Largo. Como posso lhe ajudar hoje?
+                                    </div>
+                                </div>
+                                <div class="chat-quick-replies">
+                                    <span class="quick-reply-chip" onclick="sendChatPrompt('Como pago meu IPTU?')">Como pagar IPTU?</span>
+                                    <span class="quick-reply-chip" onclick="sendChatPrompt('Como agendar médico?')">Como agendar consulta?</span>
+                                    <span class="quick-reply-chip" onclick="sendChatPrompt('Quais as obras do meu bairro?')">Obras no Centro</span>
+                                </div>
+                                <div class="chat-input-bar">
+                                    <input type="text" id="chat-input" class="chat-input-field" placeholder="Escreva sua pergunta..." onkeypress="handleChatKey(event)">
+                                    <button class="chat-send-btn" onclick="sendChatMsg()">
+                                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ==========================================
+                           VIEW 12: PERFIL DO CIDADÃO SCREEN
+                           ========================================== -->
+                        <div id="screen-perfil" class="view-screen">
+                            <div class="view-header">
+                                <button class="back-btn" onclick="navigateTo('home')">
+                                    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                                </button>
+                                <h3>Perfil do Cidadão</h3>
+                            </div>
+                            
+                            <div style="text-align: center; margin-bottom: 20px;">
+                                <div class="user-avatar" style="width:72px; height:72px; margin: 0 auto 10px auto; font-size:24px;">G</div>
+                                <h4 style="color: var(--primary); font-weight:800; font-size:14px;">Gustavo Santos de Oliveira</h4>
+                                <p style="font-size:10px; color: var(--text-secondary);">Pontos de Cidadania: <strong style="color:var(--accent); font-size:12px;" id="profile-citizenship-pts">350 pts</strong></p>
+                                <span style="background-color: #FEF3C7; color: #D97706; font-size:9px; font-weight:800; padding:2px 8px; border-radius:20px; display:inline-block; margin-top:4px;">CIDADÃO CONSCIENTE</span>
+                            </div>
+
+                            <div style="background-color:white; border-radius:var(--radius-lg); border: 1px solid var(--border-color); padding: 14px; margin-bottom: 16px;">
+                                <h4 style="color: var(--primary); font-size: 11px; font-weight:800; margin-bottom: 10px; text-transform: uppercase;">Meus Protocolos Ativos</h4>
+                                
+                                <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; font-weight:700;">
+                                    <span id="active-protocol-title">Buraco na Via (#RL-3882)</span>
+                                    <span style="color: var(--accent-blue);" id="active-protocol-status-badge">Em Execução</span>
+                                </div>
+                                <div class="timeline-tracker" id="active-protocol-timeline">
+                                    <div class="timeline-step completed">
+                                        <div class="timeline-step-title">Chamado Aberto</div>
+                                        <div class="timeline-step-desc">Hoje, 16:35 por Gustavo Santos</div>
+                                    </div>
+                                    <div class="timeline-step completed">
+                                        <div class="timeline-step-title">Analisado pela Secretaria</div>
+                                        <div class="timeline-step-desc">Hoje, 16:36 pela Infraestrutura</div>
+                                    </div>
+                                    <div class="timeline-step active">
+                                        <div class="timeline-step-title">Equipe em Rota de Serviço</div>
+                                        <div class="timeline-step-desc">Cronograma estimado: Conclusão hoje</div>
+                                    </div>
+                                </div>
+                                <button class="btn-primary" id="btn-satisfaction-trigger" style="margin-top: 10px; font-size: 11px; padding: 10px; background-color: var(--accent-green); display:none;" onclick="showSatisfactionModal()">Avaliar Este Serviço</button>
+                            </div>
+                        </div>
+
+                        <!-- ==========================================
+                           MODAIS INTERATIVOS DENTRO DO APP
+                           ========================================== -->
+                        <!-- Modal de Avaliação de Serviço (Uber Style) -->
+                        <div id="modal-satisfaction" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:1002; align-items:center; justify-content:center; padding:18px;">
+                            <div style="background:var(--bg-card); width:100%; border-radius:var(--radius-lg); padding:20px; text-align:center; animation: slideIn 0.3s ease;">
+                                <h3 style="color:var(--primary); font-weight:800; font-size: 14px;">Como foi sua experiência?</h3>
+                                <p style="font-size:11px; color:var(--text-secondary); margin-top:6px;">Como você avalia a resolução do chamado sobre <strong>Iluminação/Asfalto</strong>?</p>
+                                
+                                <div class="stars-container">
+                                    <button class="star-rating-btn" onclick="rateService(1)" id="star-1">
+                                        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    </button>
+                                    <button class="star-rating-btn" onclick="rateService(2)" id="star-2">
+                                        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    </button>
+                                    <button class="star-rating-btn" onclick="rateService(3)" id="star-3">
+                                        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    </button>
+                                    <button class="star-rating-btn" onclick="rateService(4)" id="star-4">
+                                        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    </button>
+                                    <button class="star-rating-btn" onclick="rateService(5)" id="star-5">
+                                        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    </button>
+                                </div>
+                                
+                                <textarea id="txt-rating-comment" class="input-field" placeholder="Adicione um comentário (opcional)..." style="height:60px; font-size:11px; resize:none; margin-bottom:12px;"></textarea>
+                                
+                                <button class="btn-primary" onclick="submitServiceRating()">Enviar Avaliação</button>
+                            </div>
+                        </div>
+
+                    </div> <!-- End of App Views Scroller -->
+
+                    <!-- Bottom Nav Frame -->
+                    <nav class="bottom-nav" id="app-bottom-navbar">
+                        <button class="nav-item active" onclick="navigateTo('home')">
+                            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                            Home
+                        </button>
+                        <button class="nav-item" onclick="navigateTo('meubairro')">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                            Mapa Bairro
+                        </button>
+                        <button class="nav-item animate-sos" onclick="navigateTo('seguranca')" style="color:var(--accent-red); font-weight:800;">
+                            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            SOS
+                        </button>
+                        <button class="nav-item" onclick="navigateTo('chat')">
+                            <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+                            Falar IA
+                        </button>
+                        <button class="nav-item" onclick="navigateTo('perfil')">
+                            <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                            Perfil
+                        </button>
+                    </nav>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- COLUMN 2: DESKTOP MAYOR DASHBOARD -->
+        <section id="column-dashboard" class="dashboard-column">
+            
+            <!-- Dashboard Top Header -->
+            <div class="dashboard-header">
+                <div class="dashboard-title-box">
+                    <h2>Centro de Inteligência de Rio Largo</h2>
+                    <p>Painel de Gestão Municipal em Tempo Real (Gabinete do Prefeito)</p>
+                </div>
+                <div class="dashboard-live-indicator">
+                    <span style="display:inline-block; width:8px; height:8px; background-color:var(--accent-green); border-radius:50%; margin-right:4px;"></span>
+                    MONITORAMENTO AO VIVO
+                </div>
+            </div>
+
+            <!-- KPI Summary Cards -->
+            <div class="dashboard-grid">
+                <div class="kpi-card">
+                    <div class="kpi-card-header">
+                        <span>SATISFAÇÃO DO CIDADÃO (NPS)</span>
+                        <span class="kpi-trend up" id="lbl-nps-trend">▲ 4%</span>
+                    </div>
+                    <div class="kpi-card-val" id="val-nps">78</div>
+                    <p style="font-size:10px; color: var(--text-secondary); margin-top: 4px;">Zona de Excelência (Meta: 80)</p>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-card-header">
+                        <span>OCORRÊNCIAS EM ABERTO</span>
+                        <span class="kpi-trend down" id="lbl-open-protocols-trend">▼ 12%</span>
+                    </div>
+                    <div class="kpi-card-val" id="val-open-protocols">24</div>
+                    <p style="font-size:10px; color: var(--text-secondary); margin-top: 4px;">Tempo médio de resolução: 4.2h</p>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-card-header">
+                        <span>PONTOS DE ENGAJAMENTO</span>
+                        <span class="kpi-trend up">▲ 22%</span>
+                    </div>
+                    <div class="kpi-card-val">84.2K</div>
+                    <p style="font-size:10px; color: var(--text-secondary); margin-top: 4px;">Cidadãos ativos na gamificação</p>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-card-header">
+                        <span>ORÇAMENTO EXECUTADO</span>
+                        <span style="font-size:10px; font-weight:700; color:var(--accent-blue);">74.2%</span>
+                    </div>
+                    <div class="kpi-card-val" style="font-size: var(--font-size-xl); margin-top:4px;">R$ 14.8M</div>
+                    <p style="font-size:10px; color: var(--text-secondary); margin-top: 4px;">Investimento total em Rio Largo</p>
+                </div>
+            </div>
+
+            <!-- Heatmap + secretary satisfaction row -->
+            <div class="dashboard-panels-row">
+                
+                <!-- MAPA DE CALOR INTERATIVO -->
+                <div class="dashboard-panel">
+                    <div class="panel-header">
+                        <h3>Mapa de Calor de Demandas Municipais</h3>
+                        <span style="font-size: 10px; color: var(--text-secondary); font-weight:700;">Localização em tempo real</span>
+                    </div>
+                    <div class="simulated-map-container">
+                        <div class="simulated-map-grid"></div>
+                        <div class="map-river"></div>
+                        
+                        <!-- Streets representation -->
+                        <div class="map-street map-street-h" style="top: 80px;"></div>
+                        <div class="map-street map-street-h" style="top: 140px;"></div>
+                        <div class="map-street map-street-v" style="left: 100px;"></div>
+                        <div class="map-street map-street-v" style="left: 240px;"></div>
+                        
+                        <!-- Map Pins -->
+                        <div class="map-pin pin-pothole" style="top: 60px; left: 80px;" title="Buraco - Mutirão"></div>
+                        <div class="map-pin pin-light" style="top: 120px; left: 160px;" title="Poste sem luz - Lourenço de Albuquerque"></div>
+                        <div class="map-pin pin-water" style="top: 150px; left: 220px;" title="Vazamento - Centro"></div>
+                        <div class="map-pin pin-pothole" style="top: 90px; left: 280px;" title="Buraco - Tabuleiro"></div>
+                        
+                        <!-- Dynamic Pothole Pin from Citizen interaction -->
+                        <div class="map-pin pin-pothole" id="dynamic-map-pin" style="top: 40px; left: 180px; display: none;" title="Ocorrência Gustavo"></div>
+
+                        <!-- Labels -->
+                        <div class="map-neighborhood-labels" style="top:20px; left:40px;">Mutirão</div>
+                        <div class="map-neighborhood-labels" style="top:100px; left:180px;">Centro</div>
+                        <div class="map-neighborhood-labels" style="top:180px; left:40px;">Lourenço</div>
+                    </div>
+                </div>
+
+                <!-- RANKING DAS SECRETARIAS (DESEMPENHO) -->
+                <div class="dashboard-panel">
+                    <div class="panel-header">
+                        <h3>Desempenho e Satisfação das Secretarias</h3>
+                        <span style="font-size: 10px; color: var(--text-secondary); font-weight:700;">Nível de Aprovação</span>
+                    </div>
+                    <div class="sec-ranking-list">
+                        <div class="sec-ranking-item">
+                            <div class="sec-info-row">
+                                <span>Saúde Municipal</span>
+                                <span id="lbl-sec-val-saude">8.2 / 10</span>
+                            </div>
+                            <div class="sec-progress-bar-bg">
+                                <div class="sec-progress-bar-fill" id="fill-sec-saude" style="width: 82%;"></div>
+                            </div>
+                        </div>
+                        <div class="sec-ranking-item">
+                            <div class="sec-info-row">
+                                <span>Educação e Cultura</span>
+                                <span id="lbl-sec-val-educacao">8.8 / 10</span>
+                            </div>
+                            <div class="sec-progress-bar-bg">
+                                <div class="sec-progress-bar-fill" id="fill-sec-educacao" style="width: 88%;"></div>
+                            </div>
+                        </div>
+                        <div class="sec-ranking-item">
+                            <div class="sec-info-row">
+                                <span>Infraestrutura e Zeladoria</span>
+                                <span id="lbl-sec-val-infra">7.1 / 10</span>
+                            </div>
+                            <div class="sec-progress-bar-bg">
+                                <div class="sec-progress-bar-fill" id="fill-sec-infra" style="width: 71%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Suggestion & Logs Row -->
+            <div class="dashboard-bottom-row">
+                
+                <!-- REGISTRO DE ATIVIDADES E FEEDBACKS EM TEMPO REAL -->
+                <div class="dashboard-panel">
+                    <div class="panel-header">
+                        <h3>Feed de Feedback e Atividades dos Cidadãos</h3>
+                        <span style="font-size: 10px; color: var(--text-secondary); font-weight:700;">Ao Vivo</span>
+                    </div>
+                    <div class="log-list" id="dashboard-activity-log">
+                        <div class="log-item" style="border-left-color: var(--accent-blue);">
+                            <span class="log-item-text">Gustavo Santos de Oliveira pagou o IPTU 2026 via PIX</span>
+                            <span class="log-item-time">Agora mesmo</span>
+                        </div>
+                        <div class="log-item">
+                            <span class="log-item-text">Serviço de Iluminação Pública no bairro Centro foi concluído</span>
+                            <span class="log-item-time">Há 3 min</span>
+                        </div>
+                        <div class="log-item" style="border-left-color: var(--accent-green);">
+                            <span class="log-item-text">Lucas Santos foi matriculado online na Escola Dr. Afonso</span>
+                            <span class="log-item-time">Há 10 min</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IA PREFEITURA RECOMENDAÇÕES -->
+                <div class="ai-suggestion-box">
+                    <div class="ai-suggestion-header">
+                        <!-- AI brain icon -->
+                        <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61.13.16.14.41.02.58l-1.9 1.9c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9c.17-.17.43-.16.58.02C8.93 21.26 10.36 22 12 22c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 15c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/></svg>
+                        RECOMENDAÇÕES DA INTELIGÊNCIA ARTIFICIAL
+                    </div>
+                    <p class="ai-suggestion-text" id="dashboard-ai-rec">
+                        Com base nas demandas de hoje: A satisfação geral está em <strong>78% (NPS)</strong>. Recomenda-se priorizar as vistorias de iluminação no bairro Centro para elevar o índice geral acima de 80.
+                    </p>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+/* ==========================================
+   CSS VARIABLES & DESIGN SYSTEM
+   ========================================== */
+:root {
+    /* Color Palette - Rio Largo Modern (Navy, Gold, Emerald) */
+    --primary: #0B2545;
+    --primary-light: #134074;
+    --primary-hover: #1d5b9c;
+    --primary-rgb: 11, 37, 69;
+    --accent: #F4B942;
+    --accent-dark: #d99a22;
+    --accent-green: #10B981;
+    --accent-green-light: #d1fae5;
+    --accent-red: #EF4444;
+    --accent-red-light: #fee2e2;
+    --accent-blue: #3B82F6;
+    
+    /* Backgrounds and Neutrals */
+    --bg-main: #0b132b;
+    --bg-app: #F8FAFC;
+    --bg-card: #FFFFFF;
+    --bg-card-hover: #F1F5F9;
+    --text-primary: #1E293B;
+    --text-secondary: #64748B;
+    --text-light: #FFFFFF;
+    --border-color: #E2E8F0;
+    
+    /* Typography */
+    --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-md: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+    
+    /* Layout & Shadows */
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+    --shadow-premium: 0 20px 40px -15px rgba(11, 37, 69, 0.15);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================
+   ACCESSIBILITY - HIGH CONTRAST & LARGER TEXT
+   ========================================== */
+.high-contrast {
+    --primary: #000000;
+    --primary-light: #1A1A1A;
+    --accent: #FFFF00; /* High Contrast Yellow */
+    --accent-dark: #CCCC00;
+    --accent-green: #00FF00;
+    --accent-red: #FF0000;
+    --bg-main: #121212;
+    --bg-app: #000000;
+    --bg-card: #1A1A1A;
+    --bg-card-hover: #333333;
+    --text-primary: #FFFFFF;
+    --text-secondary: #E0E0E0;
+    --text-light: #FFFFFF;
+    --border-color: #FFFF00;
+    --shadow-premium: none;
+    --shadow-lg: none;
+    --shadow-md: none;
+}
+
+.large-font {
+    --font-size-xs: 0.95rem;
+    --font-size-sm: 1.05rem;
+    --font-size-md: 1.2rem;
+    --font-size-lg: 1.35rem;
+    --font-size-xl: 1.5rem;
+    --font-size-2xl: 1.8rem;
+    --font-size-3xl: 2.2rem;
+}
+
+/* ==========================================
+   RESET & SYSTEM WRAPPER
+   ========================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-family);
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-light);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+.system-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.system-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.system-logo svg {
+    width: 40px;
+    height: 40px;
+    fill: var(--accent);
+}
+
+.system-logo h1 {
+    font-size: var(--font-size-lg);
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.system-logo span {
+    color: var(--accent);
+}
+
+.system-tag {
+    font-size: var(--font-size-xs);
+    background: rgba(255, 255, 255, 0.15);
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-left: 8px;
+    color: var(--accent);
+    font-weight: 700;
+}
+
+.system-tabs {
+    display: flex;
+    gap: 8px;
+}
+
+.system-tab-btn {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--text-light);
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.system-tab-btn:hover {
+    background: rgba(255,255,255,0.15);
+}
+
+.system-tab-btn.active {
+    background: var(--accent);
+    color: var(--primary);
+    border-color: var(--accent);
+}
+
+.workspace {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: calc(100vh - 80px);
+    width: 100%;
+}
+
+@media (min-width: 1100px) {
+    .workspace {
+        grid-template-columns: 460px 1fr; /* Fixed phone width + dashboard */
+    }
+}
+
+/* ==========================================
+   MOBILE SMARTPHONE FRAME MOCKUP
+   ========================================== */
+.phone-column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background-color: var(--primary);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.phone-mockup {
+    position: relative;
+    width: 380px;
+    height: 780px;
+    background-color: #000000;
+    border-radius: 50px;
+    padding: 12px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 4px #2c3e50;
+    border: 4px solid #1e293b;
+    overflow: hidden;
+}
+
+.phone-screen {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-app);
+    border-radius: 40px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    color: var(--text-primary);
+}
+
+/* Status Bar & Notch */
+.phone-notch {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 24px;
+    background-color: #000000;
+    border-bottom-left-radius: 18px;
+    border-bottom-right-radius: 18px;
+    z-index: 1000;
+}
+
+.phone-status-bar {
+    height: 36px;
+    background-color: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+    font-size: 11px;
+    font-weight: 700;
+    z-index: 999;
+    color: var(--text-primary);
+    position: relative;
+}
+
+.phone-status-icons {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.phone-status-icons svg {
+    width: 12px;
+    height: 12px;
+    fill: currentColor;
+}
+
+/* Bottom Home Indicator */
+.phone-home-indicator {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 5px;
+    background-color: var(--text-primary);
+    border-radius: 10px;
+    z-index: 1000;
+    opacity: 0.6;
+}
+
+/* App Views Container */
+.app-views {
+    flex: 1;
+    overflow-y: auto;
+    position: relative;
+    padding-bottom: 70px; /* Space for bottom nav bar */
+}
+
+/* Hide scrollbar in phone view */
+.app-views::-webkit-scrollbar {
+    width: 0px;
+}
+
+/* Single Screen View Structure */
+.view-screen {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 12px 18px 24px 18px;
+    overflow-y: auto;
+    animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.view-screen.active {
+    display: block;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Floating Bottom Navigation Bar */
+.bottom-nav {
+    position: absolute;
+    bottom: 12px;
+    left: 18px;
+    right: 18px;
+    height: 58px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    z-index: 998;
+    transition: var(--transition);
+}
+
+.high-contrast .bottom-nav {
+    background: #000000;
+    border: 2px solid #FFFF00;
+    border-radius: 0;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 9px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    background: none;
+    padding: 6px;
+}
+
+.nav-item svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    margin-bottom: 2px;
+}
+
+.nav-item.active {
+    color: var(--primary);
+    transform: scale(1.1);
+}
+
+.high-contrast .nav-item.active {
+    color: var(--accent);
+}
+
+/* ==========================================
+   TELA DE LOGIN / AUTENTICAÇÃO
+   ========================================== */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 24px 10px;
+}
+
+.login-header {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.login-header svg {
+    width: 64px;
+    height: 64px;
+    fill: var(--primary);
+    margin-bottom: 12px;
+}
+
+.login-header h2 {
+    font-size: var(--font-size-xl);
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.login-header p {
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+.login-form {
+    margin: 20px 0;
+}
+
+.input-group {
+    margin-bottom: 16px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+
+.input-field {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-card);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: var(--font-size-md);
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(11, 37, 69, 0.1);
+}
+
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: var(--font-size-xs);
+}
+
+.biometrics-btn {
+    background: none;
+    border: none;
+    color: var(--primary);
+    cursor: pointer;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.biometrics-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+}
+
+.login-lgpd {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.3;
+}
+
+.login-lgpd input {
+    margin-top: 2px;
+}
+
+.login-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--primary);
+    color: var(--text-light);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-md);
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.high-contrast .btn-primary {
+    background-color: #FFFF00;
+    color: #000000;
+    border: 2px solid #FFFF00;
+    border-radius: 0;
+}
+
+.high-contrast .btn-primary:hover {
+    background-color: #FFFFFF;
+}
+
+/* ==========================================
+   TELA HOME
+   ========================================== */
+.home-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-top: 8px;
+}
+
+.user-profile-summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: var(--primary-light);
+    border: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-weight: 700;
+    font-size: 14px;
+    overflow: hidden;
+}
+
+.user-welcome h3 {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.user-welcome h2 {
+    font-size: var(--font-size-lg);
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.accessibility-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.action-circle-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+
+.action-circle-btn svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+}
+
+.action-circle-btn:hover {
+    background-color: var(--bg-card-hover);
+}
+
+/* Summary Box / Resumo Cidadão */
+.summary-widget {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: var(--text-light);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+}
+
+.summary-widget::after {
+    content: '';
+    position: absolute;
+    right: -20px;
+    bottom: -20px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    pointer-events: none;
+}
+
+.summary-title {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+    margin-bottom: 12px;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.summary-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    font-weight: 600;
+    background: rgba(255,255,255,0.06);
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255,255,255,0.05);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.summary-item:hover {
+    background: rgba(255,255,255,0.12);
+}
+
+.summary-item svg {
+    width: 12px;
+    height: 12px;
+    fill: var(--accent);
+    flex-shrink: 0;
+}
+
+/* Services Grid */
+.section-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.section-title-row h4 {
+    font-size: var(--font-size-sm);
+    font-weight: 800;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.service-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 12px 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+
+.service-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent);
+}
+
+.service-card-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    color: var(--text-light);
+}
+
+.service-card span {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* App Icon colors */
+.bg-saude { background: linear-gradient(135deg, #10B981, #059669); }
+.bg-educacao { background: linear-gradient(135deg, #3B82F6, #1D4ED8); }
+.bg-infra { background: linear-gradient(135deg, #F59E0B, #D97706); }
+.bg-tributos { background: linear-gradient(135deg, #8B5CF6, #6D28D9); }
+.bg-social { background: linear-gradient(135deg, #EC4899, #BE185D); }
+.bg-emprego { background: linear-gradient(135deg, #06B6D4, #0891B2); }
+.bg-transporte { background: linear-gradient(135deg, #64748B, #475569); }
+.bg-seguranca { background: linear-gradient(135deg, #EF4444, #B91C1C); }
+.bg-ambiente { background: linear-gradient(135deg, #14B8A6, #0F766E); }
+
+/* Quick widget for "Meu Bairro" */
+.bairro-widget {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 14px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.bairro-widget:hover {
+    border-color: var(--accent-blue);
+}
+
+.bairro-widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.bairro-badge {
+    background-color: #EFF6FF;
+    color: var(--accent-blue);
+    font-size: 9px;
+    font-weight: 800;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.bairro-news-item {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.bairro-news-item svg {
+    width: 14px;
+    height: 14px;
+    fill: var(--accent-red);
+}
+
+/* ==========================================
+   SEÇÕES DE SERVIÇOS ESPECÍFICOS
+   ========================================== */
+.view-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+    position: relative;
+    padding-top: 8px;
+}
+
+.view-header h3 {
+    font-size: var(--font-size-md);
+    font-weight: 800;
+    color: var(--primary);
+    text-transform: uppercase;
+}
+
+.back-btn {
+    border: none;
+    background: var(--bg-card);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    color: var(--text-primary);
+    transition: var(--transition);
+}
+
+.back-btn:hover {
+    background: var(--bg-card-hover);
+}
+
+.back-btn svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+}
+
+/* Saúde - SUS Card */
+.sus-card {
+    background: linear-gradient(135deg, #0284C7, #0369A1);
+    color: white;
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+    cursor: pointer;
+    perspective: 1000px;
+    height: 140px;
+}
+
+.sus-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 130px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    clip-path: polygon(30% 0, 100% 0, 100% 100%, 0% 100%);
+    pointer-events: none;
+}
+
+.sus-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-weight: 700;
+    font-size: 11px;
+}
+
+.sus-logo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--font-size-sm);
+}
+
+.sus-logo svg {
+    width: 24px;
+    height: 24px;
+    fill: white;
+}
+
+.sus-card-number {
+    font-size: var(--font-size-md);
+    letter-spacing: 2px;
+    margin-top: 18px;
+    font-weight: 700;
+}
+
+.sus-card-name {
+    font-size: var(--font-size-sm);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.sus-card-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    margin-top: 8px;
+    opacity: 0.8;
+}
+
+/* Saúde - Medicine Finder */
+.med-finder-box {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 14px;
+    margin-bottom: 16px;
+}
+
+.med-search-results {
+    margin-top: 12px;
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.med-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.med-item:last-child {
+    border-bottom: none;
+}
+
+.med-info h5 {
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.med-info p {
+    font-size: 9px;
+    color: var(--text-secondary);
+}
+
+.med-status {
+    font-size: var(--font-size-xs);
+    font-weight: 800;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.med-status.available {
+    background-color: var(--accent-green-light);
+    color: var(--accent-green);
+}
+
+.med-status.unavailable {
+    background-color: var(--accent-red-light);
+    color: var(--accent-red);
+}
+
+/* Agendamentos */
+.appointment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.appointment-card {
+    background-color: var(--bg-card);
+    border-left: 4px solid var(--accent-blue);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-sm);
+}
+
+.appointment-details h5 {
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.appointment-details p {
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+/* Educação - Boletim */
+.student-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 14px;
+    margin-bottom: 16px;
+}
+
+.student-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.student-info h4 {
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.student-info p {
+    font-size: 9px;
+    color: var(--text-secondary);
+}
+
+.school-badge {
+    background-color: #EFF6FF;
+    color: var(--accent-blue);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.boletim-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-xs);
+}
+
+.boletim-table th, .boletim-table td {
+    padding: 6px 4px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.boletim-table th {
+    font-weight: 700;
+    color: var(--text-secondary);
+}
+
+.grade-badge {
+    font-weight: 800;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+.grade-badge.good {
+    color: var(--accent-green);
+    background-color: var(--accent-green-light);
+}
+
+.grade-badge.bad {
+    color: var(--accent-red);
+    background-color: var(--accent-red-light);
+}
+
+/* Infraestrutura - Report Form */
+.report-step-indicator {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    background-color: var(--bg-card);
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+}
+
+.step-indicator-item {
+    font-size: 9px;
+    font-weight: 800;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.step-indicator-item.active {
+    color: var(--primary);
+}
+
+.step-indicator-item.active span {
+    background-color: var(--primary);
+    color: white;
+}
+
+.step-indicator-item span {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: var(--border-color);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+}
+
+.photo-upload-placeholder {
+    width: 100%;
+    height: 120px;
+    border: 2px dashed var(--border-color);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: var(--bg-card);
+    transition: var(--transition);
+    margin-bottom: 16px;
+    overflow: hidden;
+}
+
+.photo-upload-placeholder:hover {
+    border-color: var(--accent);
+}
+
+.photo-upload-placeholder svg {
+    width: 32px;
+    height: 32px;
+    fill: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.photo-upload-placeholder span {
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    color: var(--text-secondary);
+}
+
+.photo-upload-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.geolocation-mock {
+    background-color: #F1F5F9;
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    font-weight: 600;
+}
+
+.geolocation-mock svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--accent-red);
+}
+
+/* Timeline / Protocol tracker */
+.timeline-tracker {
+    margin-top: 16px;
+    position: relative;
+    padding-left: 24px;
+}
+
+.timeline-tracker::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 7px;
+    width: 2px;
+    height: calc(100% - 20px);
+    background-color: var(--border-color);
+}
+
+.timeline-step {
+    position: relative;
+    margin-bottom: 16px;
+}
+
+.timeline-step::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: -21px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--bg-card);
+    border: 3px solid var(--border-color);
+}
+
+.timeline-step.completed::before {
+    border-color: var(--accent-green);
+    background-color: var(--accent-green);
+}
+
+.timeline-step.active::before {
+    border-color: var(--accent-blue);
+    background-color: var(--bg-card);
+    animation: pulseBorder 1.5s infinite;
+}
+
+@keyframes pulseBorder {
+    0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+    70% { box-shadow: 0 0 0 6px rgba(59, 130, 246, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+}
+
+.timeline-step-title {
+    font-size: var(--font-size-xs);
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.timeline-step-desc {
+    font-size: 10px;
+    color: var(--text-secondary);
+}
+
+/* Tributos / IPTU */
+.tributo-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 14px;
+    margin-bottom: 12px;
+}
+
+.tributo-amount {
+    font-size: var(--font-size-xl);
+    font-weight: 800;
+    color: var(--primary);
+    margin: 8px 0;
+}
+
+.pix-box {
+    background-color: #F8FAFC;
+    border: 1px dashed var(--border-color);
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    text-align: center;
+    margin: 12px 0;
+}
+
+.pix-code {
+    font-family: monospace;
+    font-size: 10px;
+    background-color: #E2E8F0;
+    padding: 4px;
+    border-radius: 4px;
+    word-break: break-all;
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* ==========================================
+   CENTRAL DE COMUNICAÇÃO (INSTITUCIONAL REDE SOCIAL)
+   ========================================== */
+.news-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.news-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.news-card-image {
+    width: 100%;
+    height: 120px;
+    background-color: #CBD5E1;
+    overflow: hidden;
+    position: relative;
+}
+
+.news-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.news-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: var(--primary);
+    color: var(--accent);
+    font-size: 8px;
+    font-weight: 800;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.news-card-body {
+    padding: 12px;
+}
+
+.news-card-date {
+    font-size: 9px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.news-card-title {
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+    line-height: 1.3;
+}
+
+.news-card-desc {
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.news-actions {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid var(--border-color);
+    padding: 8px 12px;
+    font-size: var(--font-size-xs);
+    background-color: #F8FAFC;
+}
+
+.news-action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 700;
+    transition: var(--transition);
+}
+
+.news-action-btn:hover, .news-action-btn.active {
+    color: var(--primary);
+}
+
+.news-action-btn svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+}
+
+/* ==========================================
+   ENQUETES & AVALIAÇÃO (UBER STYLE)
+   ========================================== */
+.poll-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 14px;
+    margin-bottom: 16px;
+}
+
+.poll-option-btn {
+    width: 100%;
+    padding: 10px 14px;
+    background-color: #F1F5F9;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: left;
+    margin-top: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.poll-option-btn:hover {
+    background-color: #E2E8F0;
+}
+
+.poll-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #EFF6FF;
+    z-index: 1;
+    transition: width 0.6s ease;
+}
+
+.poll-option-text {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Star Rating System */
+.stars-container {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin: 16px 0;
+}
+
+.star-rating-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #CBD5E1;
+    transition: var(--transition);
+}
+
+.star-rating-btn svg {
+    width: 32px;
+    height: 32px;
+    fill: currentColor;
+}
+
+.star-rating-btn.active {
+    color: var(--accent);
+}
+
+/* ==========================================
+   VIRTUAL ASSISTANT CHAT
+   ========================================== */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 60px);
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.chat-bubble {
+    max-width: 80%;
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-xs);
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.chat-bubble.ai {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    border-bottom-left-radius: 4px;
+    align-self: flex-start;
+    box-shadow: var(--shadow-sm);
+}
+
+.chat-bubble.user {
+    background-color: var(--primary);
+    color: var(--text-light);
+    border-bottom-right-radius: 4px;
+    align-self: flex-end;
+}
+
+.high-contrast .chat-bubble.user {
+    background-color: #FFFF00;
+    color: #000000;
+    border: 1px solid #FFFF00;
+}
+
+.chat-quick-replies {
+    display: flex;
+    gap: 6px;
+    padding: 8px;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.chat-quick-replies::-webkit-scrollbar {
+    height: 0px;
+}
+
+.quick-reply-chip {
+    background-color: #EFF6FF;
+    color: var(--accent-blue);
+    border: 1px solid rgba(59, 130, 246, 0.15);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: var(--transition);
+}
+
+.quick-reply-chip:hover {
+    background-color: #DBEAFE;
+}
+
+.chat-input-bar {
+    display: flex;
+    gap: 8px;
+    padding: 8px 0;
+    border-top: 1px solid var(--border-color);
+}
+
+.chat-input-field {
+    flex: 1;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-card);
+    font-size: var(--font-size-xs);
+}
+
+.chat-send-btn {
+    background-color: var(--primary);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+}
+
+/* ==========================================
+   DESKTOP PREFEITO DASHBOARD
+   ========================================== */
+.dashboard-column {
+    background-color: #F1F5F9;
+    color: var(--text-primary);
+    padding: 1.5rem 2rem;
+    overflow-y: auto;
+    height: calc(100vh - 80px);
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #E2E8F0;
+    padding-bottom: 12px;
+}
+
+.dashboard-title-box h2 {
+    font-size: var(--font-size-xl);
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.dashboard-title-box p {
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+}
+
+.dashboard-live-indicator {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--font-size-xs);
+    font-weight: 800;
+    color: var(--accent-green);
+    background-color: var(--accent-green-light);
+    padding: 6px 12px;
+    border-radius: 20px;
+    animation: flashIndicator 2s infinite;
+}
+
+@keyframes flashIndicator {
+    0% { opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 1200px) {
+    .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.kpi-card {
+    background-color: white;
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.kpi-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-secondary);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.kpi-card-val {
+    font-size: var(--font-size-2xl);
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.kpi-trend {
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.kpi-trend.up { color: var(--accent-green); }
+.kpi-trend.down { color: var(--accent-red); }
+
+/* Heatmap & Ranking panels */
+.dashboard-panels-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 1300px) {
+    .dashboard-panels-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.dashboard-panel {
+    background-color: white;
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+}
+
+.panel-header h3 {
+    font-size: var(--font-size-sm);
+    font-weight: 800;
+    color: var(--primary);
+    text-transform: uppercase;
+}
+
+/* Animated simulated HTML map for heatmap */
+.simulated-map-container {
+    height: 220px;
+    background-color: #E2E8F0;
+    border-radius: var(--radius-md);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.simulated-map-grid {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: 20px 20px;
+    background-image: linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+}
+
+.map-river {
+    position: absolute;
+    width: 100%;
+    height: 40px;
+    background-color: #93C5FD;
+    opacity: 0.6;
+    bottom: 20px;
+    transform: rotate(-10deg);
+}
+
+.map-street {
+    position: absolute;
+    background-color: #F8FAFC;
+    box-shadow: 0 0 4px rgba(0,0,0,0.05);
+}
+
+.map-street-h {
+    height: 14px;
+    width: 100%;
+}
+.map-street-v {
+    width: 14px;
+    height: 100%;
+}
+
+.map-pin {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid white;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    transition: var(--transition);
+}
+
+.map-pin:hover {
+    transform: scale(1.4);
+    z-index: 10;
+}
+
+.pin-pothole { background-color: var(--accent-red); }
+.pin-light { background-color: var(--accent); }
+.pin-water { background-color: var(--accent-blue); }
+
+.map-neighborhood-labels {
+    position: absolute;
+    font-size: 9px;
+    font-weight: 800;
+    color: #64748B;
+    background-color: rgba(255,255,255,0.7);
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+/* Secretary Satisfaction / Secretary list */
+.sec-ranking-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sec-ranking-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sec-info-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+}
+
+.sec-progress-bar-bg {
+    height: 8px;
+    background-color: #E2E8F0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.sec-progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(to right, var(--accent-blue), var(--accent-green));
+    border-radius: 4px;
+    transition: width 0.6s ease;
+}
+
+/* AI Mayor Suggestions & Logs */
+.dashboard-bottom-row {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 16px;
+}
+
+@media (max-width: 1200px) {
+    .dashboard-bottom-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.log-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.log-item {
+    font-size: var(--font-size-xs);
+    padding: 8px 12px;
+    background-color: #F8FAFC;
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.log-item-text {
+    font-weight: 500;
+}
+
+.log-item-time {
+    font-size: 10px;
+    color: var(--text-secondary);
+}
+
+.ai-suggestion-box {
+    background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: var(--radius-md);
+    padding: 14px;
+}
+
+.ai-suggestion-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 800;
+    color: var(--accent-blue);
+    margin-bottom: 8px;
+    font-size: var(--font-size-xs);
+}
+
+.ai-suggestion-header svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+}
+
+.ai-suggestion-text {
+    font-size: var(--font-size-xs);
+    color: var(--primary);
+    line-height: 1.4;
+    font-weight: 500;
+}
+
+/* Dialog Overlay / Notification alert toast */
+.app-toast {
+    position: absolute;
+    top: 48px;
+    left: 18px;
+    right: 18px;
+    background: var(--primary);
+    color: white;
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    box-shadow: var(--shadow-lg);
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    transform: translateY(-100px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.app-toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.app-toast svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--accent);
+}
+// ==========================================
+// RIO LARGO DIGITAL - APPLICATION LOGIC
+// ==========================================
+
+// Global App State
+const state = {
+    user: {
+        name: "Gustavo Santos de Oliveira",
+        cpf: "123.456.789-00",
+        citizenshipPoints: 350,
+        badges: ["Cidadão Ativo", "Fiscal do Bairro"],
+        address: "Av. Fernando Collor, Centro, Rio Largo",
+        susNumber: "898 0012 3456 7890",
+        kids: [
+            { name: "Lucas Santos", school: "Escola Municipal Dr. Afonso de Melo", grade: "6º Ano" }
+        ],
+        protocols: [
+            { id: "RL-3882", type: "Buraco na Via", status: "Em Execução", date: "Hoje, 16:35", steps: [
+                { title: "Chamado Aberto", desc: "Hoje, 16:35 por Gustavo Santos", completed: true },
+                { title: "Analisado pela Secretaria", desc: "Hoje, 16:36 pela Infraestrutura", completed: true },
+                { title: "Equipe em Rota de Serviço", desc: "Cronograma estimado: Conclusão hoje", completed: false }
+            ]}
+        ]
+    },
+    dashboard: {
+        nps: 78,
+        openProtocols: 24,
+        resolvedProtocols: 142,
+        budgetExecuted: 14.8,
+        satisfactionSaude: 8.2,
+        satisfactionEdu: 8.8,
+        satisfactionInfra: 7.1,
+    },
+    currentOcorrencia: {
+        type: "buraco",
+        desc: "",
+        photo: null
+    }
+};
+
+// Available Medicines Mock Database
+const medicinesDb = [
+    { name: "Dipirona Monoidratada 500mg", location: "UBS Centro", qty: 120, status: "available" },
+    { name: "Ibuprofeno 600mg", location: "UBS Lourenço de Albuquerque", qty: 0, status: "unavailable" },
+    { name: "Paracetamol 500mg", location: "UBS Centro", qty: 85, status: "available" },
+    { name: "Amoxicilina 500mg", location: "UBS Mutirão", qty: 40, status: "available" },
+    { name: "Losartana Potássica 50mg", location: "UBS Centro", qty: 210, status: "available" }
+];
+
+// Initial Setup on DOM Load
+document.addEventListener("DOMContentLoaded", () => {
+    // Start live clock
+    updateClock();
+    setInterval(updateClock, 60000);
+});
+
+// Update Phone Time
+function updateClock() {
+    const timeDisplay = document.getElementById("phone-clock");
+    if (timeDisplay) {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        timeDisplay.textContent = `${hours}:${minutes}`;
+    }
+}
+
+// Switch view between Both, Mobile, or Dashboard
+function switchView(view) {
+    const workspace = document.getElementById("main-workspace");
+    const colApp = document.getElementById("column-app");
+    const colDash = document.getElementById("column-dashboard");
+    
+    // Reset classes
+    document.querySelectorAll(".system-tab-btn").forEach(btn => btn.classList.remove("active"));
+    
+    if (view === 'both') {
+        document.getElementById("btn-tab-both").classList.add("active");
+        workspace.style.gridTemplateColumns = "460px 1fr";
+        colApp.style.display = "flex";
+        colDash.style.display = "block";
+    } else if (view === 'app') {
+        document.getElementById("btn-tab-app").classList.add("active");
+        workspace.style.gridTemplateColumns = "1fr";
+        colApp.style.display = "flex";
+        colDash.style.display = "none";
+    } else if (view === 'dash') {
+        document.getElementById("btn-tab-dash").classList.add("active");
+        workspace.style.gridTemplateColumns = "1fr";
+        colApp.style.display = "none";
+        colDash.style.display = "block";
+    }
+}
+
+// Navigate Screen Views inside phone
+function navigateTo(screenId) {
+    // Hide all view screens
+    document.querySelectorAll(".view-screen").forEach(screen => {
+        screen.classList.remove("active");
+    });
+    
+    // Show requested screen
+    const targetScreen = document.getElementById(`screen-${screenId}`);
+    if (targetScreen) {
+        targetScreen.classList.add("active");
+        // Scroll back to top
+        document.getElementById("app-views-scroller").scrollTop = 0;
+    }
+
+    // Adjust active states in bottom navigation bar
+    const bottomNav = document.getElementById("app-bottom-navbar");
+    
+    // Hide bottom navbar on login screen
+    if (screenId === 'login') {
+        bottomNav.style.display = "none";
+    } else {
+        bottomNav.style.display = "flex";
+    }
+
+    // Set active tab class
+    document.querySelectorAll(".nav-item").forEach(item => {
+        item.classList.remove("active");
+    });
+    
+    if (screenId === 'home') {
+        document.querySelector(".nav-item:nth-child(1)").classList.add("active");
+    } else if (screenId === 'meubairro') {
+        document.querySelector(".nav-item:nth-child(2)").classList.add("active");
+    } else if (screenId === 'seguranca') {
+        document.querySelector(".nav-item:nth-child(3)").classList.add("active");
+    } else if (screenId === 'chat') {
+        document.querySelector(".nav-item:nth-child(4)").classList.add("active");
+    } else if (screenId === 'perfil') {
+        document.querySelector(".nav-item:nth-child(5)").classList.add("active");
+    }
+}
+
+// Show Toast Alert Notification
+function showToast(text, duration = 4000) {
+    const toast = document.getElementById("app-toast-notification");
+    const toastText = document.getElementById("app-toast-text");
+    toastText.textContent = text;
+    toast.classList.add("show");
+    
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, duration);
+}
+
+// Add Item into Prefeito dashboard activity log
+function logDashboardActivity(text, isAlert = false) {
+    const logList = document.getElementById("dashboard-activity-log");
+    if (!logList) return;
+
+    const logItem = document.createElement("div");
+    logItem.className = "log-item";
+    if (isAlert) {
+        logItem.style.borderLeftColor = "var(--accent-red)";
+    } else {
+        logItem.style.borderLeftColor = "var(--accent-blue)";
+    }
+    
+    logItem.innerHTML = `
+        <span class="log-item-text">${text}</span>
+        <span class="log-item-time">Agora mesmo</span>
+    `;
+    
+    logList.insertBefore(logItem, logList.firstChild);
+}
+
+// ==========================================
+// INTERACTIONS - AUTHENTICATION
+// ==========================================
+
+function handleLogin() {
+    const cpfInput = document.getElementById("login-cpf").value;
+    const lgpdCheck = document.getElementById("chk-lgpd").checked;
+
+    if (!lgpdCheck) {
+        showToast("Você precisa aceitar os termos da LGPD.");
+        return;
+    }
+
+    if (cpfInput.length < 11) {
+        showToast("CPF Inválido. Digite um CPF completo.");
+        return;
+    }
+
+    showToast("Autenticando...");
+    setTimeout(() => {
+        navigateTo('home');
+        showToast("Bem-vindo de volta, Gustavo!");
+        logDashboardActivity("Gustavo Santos acessou o Super App Rio Largo Digital");
+    }, 800);
+}
+
+function handleBiometrics() {
+    showToast("Simulando FaceID / Impressão Digital...");
+    
+    // Simulate short scanning animation on mockup
+    const screen = document.getElementById("phone-screen-container");
+    const scannerOverlay = document.createElement("div");
+    scannerOverlay.style.position = "absolute";
+    scannerOverlay.style.top = "0";
+    scannerOverlay.style.left = "0";
+    scannerOverlay.style.width = "100%";
+    scannerOverlay.style.height = "100%";
+    scannerOverlay.style.backgroundColor = "rgba(11, 37, 69, 0.9)";
+    scannerOverlay.style.zIndex = "1005";
+    scannerOverlay.style.display = "flex";
+    scannerOverlay.style.flexDirection = "column";
+    scannerOverlay.style.alignItems = "center";
+    scannerOverlay.style.justifyContent = "center";
+    scannerOverlay.innerHTML = `
+        <svg width="60" height="60" fill="var(--accent)" viewBox="0 0 24 24" style="animation: pulseBorder 1s infinite;">
+            <path d="M12 1c-5.52 0-10 4.48-10 10s4.48 10 10 10 10-4.48 10-10-4.48-10-10-10zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/>
+        </svg>
+        <span style="color: white; font-size:12px; font-weight:700; margin-top:12px;">Escaneando...</span>
+    `;
+    screen.appendChild(scannerOverlay);
+    
+    setTimeout(() => {
+        scannerOverlay.remove();
+        navigateTo('home');
+        showToast("Autenticado via Biometria!");
+        logDashboardActivity("Gustavo Santos autenticou via Biometria");
+    }, 1200);
+}
+
+// ==========================================
+// ACCESSIBILITY CONTROL
+// ==========================================
+
+function toggleContrast() {
+    document.body.classList.toggle("high-contrast");
+    const contrastEnabled = document.body.classList.contains("high-contrast");
+    showToast(contrastEnabled ? "Alto contraste ativado" : "Alto contraste desativado");
+}
+
+function toggleFontSize() {
+    document.body.classList.toggle("large-font");
+    const largeEnabled = document.body.classList.contains("large-font");
+    showToast(largeEnabled ? "Fonte ampliada ativada" : "Fonte padrão ativada");
+}
+
+// ==========================================
+// SAÚDE INTERACTIONS
+// ==========================================
+
+function flipSusCard() {
+    const card = document.querySelector(".sus-card");
+    const numberLbl = document.getElementById("sus-card-number-lbl");
+    
+    if (numberLbl.textContent.includes("898")) {
+        numberLbl.textContent = "QR Code Gerado para Leitura";
+        card.style.background = "linear-gradient(135deg, #0f172a, #1e293b)";
+        // Create simple mock QR block
+        const qr = document.createElement("div");
+        qr.id = "mock-qr";
+        qr.style.width = "48px";
+        qr.style.height = "48px";
+        qr.style.backgroundColor = "white";
+        qr.style.position = "absolute";
+        qr.style.right = "20px";
+        qr.style.top = "46px";
+        qr.style.border = "4px solid #fff";
+        qr.innerHTML = `<div style="width:100%; height:100%; background: repeating-linear-gradient(45deg, #000, #000 4px, #fff 4px, #fff 8px);"></div>`;
+        card.appendChild(qr);
+        showToast("Cartão SUS: Apresente o QR Code no posto.");
+    } else {
+        numberLbl.textContent = state.user.susNumber;
+        card.style.background = "linear-gradient(135deg, #0284C7, #0369A1)";
+        const qr = document.getElementById("mock-qr");
+        if (qr) qr.remove();
+    }
+}
+
+function searchMedicine() {
+    const query = document.getElementById("input-med-search").value.toLowerCase();
+    const resultsContainer = document.getElementById("med-results-list");
+    resultsContainer.innerHTML = "";
+    
+    const filtered = medicinesDb.filter(med => med.name.toLowerCase().includes(query));
+    
+    if (filtered.length === 0) {
+        resultsContainer.innerHTML = `<p style="font-size: 11px; color: var(--text-secondary); text-align: center; padding: 12px 0;">Nenhum medicamento encontrado.</p>`;
+        return;
+    }
+    
+    filtered.forEach(med => {
+        const item = document.createElement("div");
+        item.className = "med-item";
+        item.innerHTML = `
+            <div class="med-info">
+                <h5>${med.name}</h5>
+                <p>${med.location} - ${med.qty > 0 ? `${med.qty} unidades` : 'Sem estoque'}</p>
+            </div>
+            <span class="med-status ${med.status}">${med.qty > 0 ? 'Disponível' : 'Indisponível'}</span>
+        `;
+        resultsContainer.appendChild(item);
+    });
+}
+
+// ==========================================
+// EDUCAÇÃO INTERACTIONS
+// ==========================================
+
+function simulateMatricula() {
+    showToast("Realizando Matrícula Online...");
+    
+    setTimeout(() => {
+        showToast("Matrícula de Lucas Santos realizada com sucesso!");
+        logDashboardActivity("Lucas Santos foi matriculado na Escola Dr. Afonso via Super App");
+        
+        // Award points
+        state.user.citizenshipPoints += 50;
+        updatePointsDisplay();
+        
+        // Show points alert
+        showToast("Você ganhou +50 pontos de cidadania!");
+    }, 1500);
+}
+
+// ==========================================
+// INFRAESTRUTURA INTERACTIONS (ZELADORIA)
+// ==========================================
+
+function goToInfraStep(stepNum) {
+    // Hide content blocks
+    document.getElementById("infra-step-1-content").style.display = "none";
+    document.getElementById("infra-step-2-content").style.display = "none";
+    document.getElementById("infra-step-3-content").style.display = "none";
+    
+    // Reset step indicators active states
+    document.querySelectorAll(".step-indicator-item").forEach(indicator => {
+        indicator.classList.remove("active");
+    });
+
+    // Show step block
+    document.getElementById(`infra-step-${stepNum}-content`).style.display = "block";
+    
+    // Highlight indicators up to active step
+    for (let i = 1; i <= stepNum; i++) {
+        document.getElementById(`step-id-${i}`).classList.add("active");
+    }
+}
+
+function simulateCameraPhoto() {
+    const photoBox = document.getElementById("infra-photo-box");
+    showToast("Simulando Câmera...");
+    
+    photoBox.innerHTML = `
+        <div style="width:100%; height:100%; background: linear-gradient(135deg, #4b5563, #1f2937); display:flex; align-items:center; justify-content:center; color:white; font-size:11px; font-weight:800; text-transform:uppercase; text-align:center; padding:10px;">
+            FOTO DETECTADA: BURACO NA AV. FERNANDO COLLOR
+        </div>
+    `;
+    state.currentOcorrencia.photo = "dummy_pothole.jpg";
+    showToast("Foto capturada com sucesso!");
+}
+
+function submitInfraOcorrencia() {
+    const typeSelect = document.getElementById("select-infra-type");
+    const descText = document.getElementById("input-infra-desc").value;
+    const typeLabel = typeSelect.options[typeSelect.selectedIndex].text;
+    
+    const protocolId = `RL-${Math.floor(1000 + Math.random() * 9000)}`;
+    
+    showToast("Enviando ocorrência...");
+    
+    setTimeout(() => {
+        // Register new protocol
+        const newProtocol = {
+            id: protocolId,
+            type: typeLabel,
+            status: "Recebido",
+            date: "Hoje",
+            steps: [
+                { title: "Chamado Aberto", desc: "Hoje, pelo cidadão Gustavo Santos", completed: true },
+                { title: "Analisado pela Secretaria", desc: "Aguardando verificação técnica", completed: false },
+                { title: "Equipe em Rota de Serviço", desc: "Planejado", completed: false }
+            ]
+        };
+        
+        state.user.protocols.unshift(newProtocol);
+        
+        // Update user profile display
+        updateProfileProtocolsList(newProtocol);
+        
+        // Show success screen inside mock
+        const successBox = document.getElementById("infra-success-box");
+        successBox.innerHTML = `
+            <svg viewBox="0 0 24 24" style="width: 48px; height: 48px; fill: var(--accent-green); margin-bottom: 12px;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            <h4 style="color: var(--primary); font-size: 14px; font-weight: 800;">Ocorrência Registrada!</h4>
+            <p style="font-size: 11px; color: var(--text-secondary); margin-top: 6px;">Protocolo: <strong>#${protocolId}</strong></p>
+            <p style="font-size: 9px; color: var(--text-secondary); margin-top: 2px;">Você pode acompanhar o andamento em tempo real no seu perfil.</p>
+            <button class="btn-primary" style="margin-top:12px; background-color: var(--accent-blue);" onclick="navigateTo('perfil')">Ir para Meus Chamados</button>
+        `;
+        
+        // Trigger interactions on Prefeito Dashboard
+        state.dashboard.openProtocols += 1;
+        document.getElementById("val-open-protocols").textContent = state.dashboard.openProtocols;
+        logDashboardActivity(`Novo chamado #${protocolId} (${typeLabel}) aberto por Gustavo no Centro`);
+        
+        // Show pin on dashboard heatmap
+        const mapPin = document.getElementById("dynamic-map-pin");
+        if (mapPin) {
+            mapPin.style.display = "block";
+            mapPin.title = `${typeLabel} - Centro (#${protocolId})`;
+        }
+        
+        // Add points
+        state.user.citizenshipPoints += 20;
+        updatePointsDisplay();
+        showToast("Você ganhou +20 pontos por relatar um problema!");
+
+        // Simulate automatic resolution after 12 seconds
+        simulateAutomaticResolution(protocolId);
+
+    }, 1500);
+}
+
+function updateProfileProtocolsList(newProtocol) {
+    const title = document.getElementById("active-protocol-title");
+    const badge = document.getElementById("active-protocol-status-badge");
+    const timeline = document.getElementById("active-protocol-timeline");
+    
+    title.textContent = `${newProtocol.type} (#${newProtocol.id})`;
+    badge.textContent = newProtocol.status;
+    badge.style.color = "var(--accent-blue)";
+    
+    timeline.innerHTML = `
+        <div class="timeline-step completed">
+            <div class="timeline-step-title">Chamado Aberto</div>
+            <div class="timeline-step-desc">Hoje por Gustavo Santos</div>
+        </div>
+        <div class="timeline-step active">
+            <div class="timeline-step-title">Aguardando Secretaria</div>
+            <div class="timeline-step-desc">Em análise na Infraestrutura</div>
+        </div>
+        <div class="timeline-step">
+            <div class="timeline-step-title">Serviço Concluído</div>
+            <div class="timeline-step-desc">Planejado</div>
+        </div>
+    `;
+}
+
+// Simulate resolution to show the user-satisfaction prompt
+function simulateAutomaticResolution(protocolId) {
+    setTimeout(() => {
+        // Notification toast
+        showToast(`Alerta: Sua solicitação #${protocolId} foi resolvida pela Infraestrutura!`);
+        
+        // Update protocol in profile
+        const title = document.getElementById("active-protocol-title");
+        const badge = document.getElementById("active-protocol-status-badge");
+        const timeline = document.getElementById("active-protocol-timeline");
+        
+        title.textContent = `Buraco Consertado (#${protocolId})`;
+        badge.textContent = "Concluído";
+        badge.style.color = "var(--accent-green)";
+        
+        timeline.innerHTML = `
+            <div class="timeline-step completed">
+                <div class="timeline-step-title">Chamado Aberto</div>
+                <div class="timeline-step-desc">Hoje por Gustavo</div>
+            </div>
+            <div class="timeline-step completed">
+                <div class="timeline-step-title">Chamado Analisado e Aprovado</div>
+                <div class="timeline-step-desc">Equipe de tapa-buraco enviada</div>
+            </div>
+            <div class="timeline-step completed">
+                <div class="timeline-step-title">Asfalto Aplicado com Sucesso</div>
+                <div class="timeline-step-desc">Serviço concluído às ${new Date().toLocaleTimeString().substring(0, 5)}</div>
+            </div>
+        `;
+        
+        // Reveal Rating Button
+        document.getElementById("btn-satisfaction-trigger").style.display = "block";
+        
+        // Telemetry update in Prefeito Dash
+        state.dashboard.openProtocols -= 1;
+        state.dashboard.resolvedProtocols += 1;
+        document.getElementById("val-open-protocols").textContent = state.dashboard.openProtocols;
+        logDashboardActivity(`Ocorrência #${protocolId} no Centro concluída pela equipe técnica`, false);
+        
+        // Remove pin from map
+        const mapPin = document.getElementById("dynamic-map-pin");
+        if (mapPin) mapPin.style.display = "none";
+        
+        // Trigger automated AI evaluation alert
+        document.getElementById("dashboard-ai-rec").innerHTML = `
+            <strong>IA Alerta:</strong> O chamado de zeladoria #${protocolId} foi concluído em tempo recorde (12s para testes). Aguardando feedback de satisfação do cidadão.
+        `;
+
+    }, 10000);
+}
+
+// ==========================================
+// TRIBUTOS INTERACTIONS
+// ==========================================
+
+function copyPixCode() {
+    showToast("Código PIX Copiado!");
+    const btn = document.querySelector("#iptu-pix-box button");
+    btn.textContent = "Código Copiado!";
+    btn.style.backgroundColor = "var(--accent-green)";
+    
+    // Simulate pay after copy
+    setTimeout(() => {
+        showToast("Simulando Recebimento de Pix...");
+        logDashboardActivity("Gustavo Santos quitou IPTU 2026 via PIX (R$ 240,00)");
+        
+        // Upgrade budget execute
+        state.dashboard.budgetExecuted += 0.1;
+        
+        // Update home screen widget
+        const items = document.querySelectorAll(".summary-item span");
+        items[2].textContent = "IPTU 2026 Pago ✔";
+        items[2].parentElement.style.opacity = "0.7";
+        
+        showToast("Pagamento de IPTU compensado!");
+    }, 4000);
+}
+
+function payWithCard() {
+    showToast("Abrindo portal de pagamento...");
+    // Mock modal input card
+    const cardModal = document.createElement("div");
+    cardModal.style.position = "absolute";
+    cardModal.style.top = "0";
+    cardModal.style.left = "0";
+    cardModal.style.width = "100%";
+    cardModal.style.height = "100%";
+    cardModal.style.backgroundColor = "rgba(0,0,0,0.7)";
+    cardModal.style.zIndex = "1006";
+    cardModal.style.display = "flex";
+    cardModal.style.alignItems = "center";
+    cardModal.style.justifyContent = "center";
+    cardModal.style.padding = "20px";
+    cardModal.innerHTML = `
+        <div style="background: white; width:100%; border-radius:16px; padding:20px; text-align:left;">
+            <h4 style="color:var(--primary); font-weight:800; font-size:13px; margin-bottom:12px;">Pagar com Cartão de Crédito</h4>
+            <div class="input-group">
+                <label style="font-size:10px;">Número do Cartão</label>
+                <input type="text" class="input-field" value="4556 •••• •••• 8894" style="padding:10px;">
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                <div class="input-group">
+                    <label style="font-size:10px;">Validade</label>
+                    <input type="text" class="input-field" value="08/29" style="padding:10px;">
+                </div>
+                <div class="input-group">
+                    <label style="font-size:10px;">CVV</label>
+                    <input type="text" class="input-field" value="***" style="padding:10px;">
+                </div>
+            </div>
+            <button class="btn-primary" id="btn-card-pay-submit" style="margin-top:10px;" onclick="confirmCardPayment(this)">Confirmar R$ 240,00</button>
+            <button class="btn-primary" style="margin-top:6px; background-color: var(--text-secondary);" onclick="this.parentElement.parentElement.remove()">Cancelar</button>
+        </div>
+    `;
+    document.getElementById("phone-screen-container").appendChild(cardModal);
+}
+
+function confirmCardPayment(btn) {
+    btn.textContent = "Processando Transação...";
+    btn.disabled = true;
+    
+    setTimeout(() => {
+        btn.parentElement.parentElement.remove();
+        showToast("IPTU pago via Cartão com Sucesso!");
+        logDashboardActivity("Gustavo Santos quitou IPTU 2026 via Cartão de Crédito");
+        
+        // Update budget execute
+        state.dashboard.budgetExecuted += 0.1;
+        
+        const items = document.querySelectorAll(".summary-item span");
+        items[2].textContent = "IPTU 2026 Pago ✔";
+        items[2].parentElement.style.opacity = "0.7";
+    }, 1500);
+}
+
+// ==========================================
+// SOCIAL PROGRAM INTERACTION
+// ==========================================
+
+function simulateSocialAppointment() {
+    showToast("Agendando atendimento CRAS Centro...");
+    
+    setTimeout(() => {
+        showToast("Atendimento agendado para 14/07 às 09:00!");
+        logDashboardActivity("Gustavo Santos agendou atendimento assistencial no CRAS Centro");
+        
+        // Add summary item indicator
+        const summaryGrid = document.querySelector(".summary-grid");
+        const newItem = document.createElement("div");
+        newItem.className = "summary-item";
+        newItem.onclick = () => navigateTo('social');
+        newItem.innerHTML = `
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+            <span>CRAS agendado (14/07)</span>
+        `;
+        summaryGrid.appendChild(newItem);
+    }, 1000);
+}
+
+// ==========================================
+// SOS PANIC SYSTEM
+// ==========================================
+
+let sosTimer = null;
+function triggerSOS() {
+    const btn = document.getElementById("btn-sos-panic");
+    const label = document.getElementById("sos-countdown");
+    
+    if (sosTimer) {
+        // Cancel SOS
+        clearInterval(sosTimer);
+        sosTimer = null;
+        label.textContent = "SOS Cancelado";
+        btn.style.boxShadow = "0 0 25px rgba(239, 68, 68, 0.4)";
+        showToast("Sinal de pânico cancelado.");
+        return;
+    }
+
+    let seconds = 3;
+    label.textContent = `Disparando em ${seconds}s...`;
+    btn.style.boxShadow = "0 0 45px rgba(239, 68, 68, 0.8)";
+    
+    sosTimer = setInterval(() => {
+        seconds--;
+        if (seconds <= 0) {
+            clearInterval(sosTimer);
+            sosTimer = null;
+            label.textContent = "SOS ATIVADO!";
+            showToast("Alerta SOS transmitido à Defesa Civil e Guarda!");
+            logDashboardActivity("🚨 ALERTA DE PÂNICO SOS ATIVADO por Gustavo Santos (Centro)", true);
+            
+            // Add red pulsing glow to the entire mayor dashboard
+            const dashboard = document.getElementById("column-dashboard");
+            dashboard.style.boxShadow = "inset 0 0 50px rgba(239, 68, 68, 0.3)";
+            setTimeout(() => {
+                dashboard.style.boxShadow = "none";
+            }, 6000);
+        } else {
+            label.textContent = `Disparando em ${seconds}s...`;
+        }
+    }, 1000);
+}
+
+// ==========================================
+// CHATBOT IA LOGIC
+// ==========================================
+
+function handleChatKey(event) {
+    if (event.key === "Enter") {
+        sendChatMsg();
+    }
+}
+
+function sendChatMsg() {
+    const input = document.getElementById("chat-input");
+    const query = input.value.trim();
+    if (!query) return;
+
+    appendChatBubble(query, "user");
+    input.value = "";
+    
+    simulateAiResponse(query);
+}
+
+function sendChatPrompt(promptText) {
+    appendChatBubble(promptText, "user");
+    simulateAiResponse(promptText);
+}
+
+function appendChatBubble(text, sender) {
+    const chatBox = document.getElementById("chat-box");
+    const bubble = document.createElement("div");
+    bubble.className = `chat-bubble ${sender}`;
+    bubble.textContent = text;
+    chatBox.appendChild(bubble);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function simulateAiResponse(query) {
+    const chatBox = document.getElementById("chat-box");
+    
+    // Add typing indicator
+    const typing = document.createElement("div");
+    typing.className = "chat-bubble ai";
+    typing.id = "chat-typing";
+    typing.textContent = "Escrevendo...";
+    chatBox.appendChild(typing);
+    chatBox.scrollTop = chatBox.scrollHeight;
+    
+    // Analyze question
+    let responseText = "Entendi sua dúvida. Como assistente inteligente de Rio Largo, posso lhe informar que você pode acompanhar seus protocolos clicando na aba Perfil ou resolver pendências diretamente nos menus principais.";
+    const lowerQuery = query.toLowerCase();
+    
+    if (lowerQuery.includes("iptu") || lowerQuery.includes("pagar")) {
+        responseText = "Para pagar seu IPTU, vá na aba Tributos, clique em cota única para copiar a chave PIX ou digite os dados do cartão de crédito.";
+    } else if (lowerQuery.includes("medico") || lowerQuery.includes("consulta") || lowerQuery.includes("saude")) {
+        responseText = "Você tem uma consulta agendada para Amanhã às 14:30 na UBS Centro. Para agendar novas, use a seção de Saúde na Home.";
+    } else if (lowerQuery.includes("obras") || lowerQuery.includes("bairro") || lowerQuery.includes("centro")) {
+        responseText = "No Centro, temos a obra da 'Construção da Praça Central' que está com 80% de andamento e entrega estimada para o dia 12/08/2026.";
+    } else if (lowerQuery.includes("vacina")) {
+        responseText = "A vacinação contra a Gripe e COVID-19 está disponível na UBS Centro para a sua faixa etária. Não esqueça de levar o seu cartão do SUS.";
+    }
+    
+    setTimeout(() => {
+        typing.remove();
+        appendChatBubble(responseText, "ai");
+        logDashboardActivity(`Cidadão Gustavo interagiu com a IA Municipal ("${query.substring(0, 20)}...")`);
+    }, 1200);
+}
+
+// ==========================================
+// COMUNIDADE FEED INTERACTIONS
+// ==========================================
+
+function toggleLike() {
+    const btn = document.getElementById("news-like-btn");
+    const counter = document.getElementById("news-like-count");
+    let currentVal = parseInt(counter.textContent);
+    
+    btn.classList.toggle("active");
+    if (btn.classList.contains("active")) {
+        currentVal++;
+        btn.style.color = "var(--accent-red)";
+        showToast("Obrigado pelo seu feedback positivo!");
+        logDashboardActivity("Gustavo curtiu a publicação sobre a revitalização da Praça Central");
+    } else {
+        currentVal--;
+        btn.style.color = "var(--text-secondary)";
+    }
+    counter.textContent = currentVal;
+}
+
+// ==========================================
+// SATISFACTION EVALUATION SYSTEM (UBER STYLE)
+// ==========================================
+
+let activeRatingValue = 0;
+
+function showSatisfactionModal() {
+    document.getElementById("modal-satisfaction").style.display = "flex";
+}
+
+function rateService(stars) {
+    activeRatingValue = stars;
+    
+    // Highlight stars
+    for (let i = 1; i <= 5; i++) {
+        const starBtn = document.getElementById(`star-${i}`);
+        if (i <= stars) {
+            starBtn.classList.add("active");
+        } else {
+            starBtn.classList.remove("active");
+        }
+    }
+}
+
+function submitServiceRating() {
+    if (activeRatingValue === 0) {
+        showToast("Por favor, selecione uma nota de 1 a 5 estrelas.");
+        return;
+    }
+    
+    const comment = document.getElementById("txt-rating-comment").value.trim();
+    
+    showToast("Enviando avaliação...");
+    
+    setTimeout(() => {
+        // Hide rating card & trigger
+        document.getElementById("modal-satisfaction").style.display = "none";
+        document.getElementById("btn-satisfaction-trigger").style.display = "none";
+        
+        // Recalculate NPS / Dash Metrics
+        // 5 stars = promoter, 1-3 = detractor
+        if (activeRatingValue >= 4) {
+            state.dashboard.nps = Math.min(100, state.dashboard.nps + 1);
+            state.dashboard.satisfactionInfra = Math.min(10, state.dashboard.satisfactionInfra + 0.2);
+        } else {
+            state.dashboard.nps = Math.max(0, state.dashboard.nps - 2);
+            state.dashboard.satisfactionInfra = Math.max(0, state.dashboard.satisfactionInfra - 0.4);
+        }
+        
+        // Update Dashboard Elements
+        document.getElementById("val-nps").textContent = state.dashboard.nps;
+        document.getElementById("lbl-sec-val-infra").textContent = `${state.dashboard.satisfactionInfra.toFixed(1)} / 10`;
+        document.getElementById("fill-sec-infra").style.width = `${state.dashboard.satisfactionInfra * 10}%`;
+        
+        // Add points
+        state.user.citizenshipPoints += 30;
+        updatePointsDisplay();
+        
+        // Log telemetry
+        const commentText = comment ? ` - "${comment}"` : "";
+        logDashboardActivity(`Avaliação recebida: Cidadão avaliou Infraestrutura com ${activeRatingValue} estrelas${commentText}`);
+        
+        // Clean form
+        rateService(0);
+        document.getElementById("txt-rating-comment").value = "";
+        
+        showToast("Avaliação registrada! Obrigado por colaborar.");
+        
+        // AI congratulates on NPS change
+        document.getElementById("dashboard-ai-rec").innerHTML = `
+            <strong>IA Alerta:</strong> NPS atualizado para <strong>${state.dashboard.nps}</strong> após a última avaliação da Infraestrutura. Ações de zeladoria continuam bem avaliadas no Centro.
+        `;
+    }, 1000);
+}
+
+function updatePointsDisplay() {
+    document.getElementById("profile-citizenship-pts").textContent = `${state.user.citizenshipPoints} pts`;
+}
+
+
+
